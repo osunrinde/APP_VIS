@@ -32,7 +32,7 @@ st.set_page_config(
     layout="wide", initial_sidebar_state='expanded'
 )
 
-image= Image.open("C:/Users/tosunrin/Music/R.jpg")
+image= Image.open('./Extras/R.jpg')
 st.image(image, use_column_width=True)
 
 #customizing the dashboard header
