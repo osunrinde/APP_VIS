@@ -16,3 +16,4 @@ smmap==5.0.0
 streamlit==1.11.1
 tensorflow==2.9.0
 xlsxwriter==3.0.3
+matplotlib==3.7.2
