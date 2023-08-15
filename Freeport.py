@@ -28,7 +28,7 @@ from io import BytesIO
 
 st.set_page_config(
     page_title="Ore Type Definitions Dashboard",
-    page_icon="C:/Users/tosunrin/Music/favicon-32x32.png",
+    page_icon='./Extras/favicon-32x32.png,
     layout="wide", initial_sidebar_state='expanded'
 )
 
