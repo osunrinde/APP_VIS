@@ -493,7 +493,7 @@ def outliers_download(dataframes, filename):
 def main():
     #st.title('Ore-Type Validation Data plotter')
     # Upload data from user's local machine
-    uploaded_file = st.file_uploader("", type=["csv", "xlsx"], accept_multiple_files=True")
+    uploaded_file = st.file_uploader("", type=["csv", "xlsx"], accept_multiple_files=True)
 
     if uploaded_file is not None:
         for files in uploaded_file:
