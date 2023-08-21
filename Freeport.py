@@ -664,7 +664,7 @@ if authentication_status:
                 with download_button:
                     if st.button("Download Outliers"):
                         time.sleep(3)
-                        download_time=datetime.now().strftime(%m%d%y_%H_%M_%S")
+                        download_time=datetime.now().strftime("%m%d%y_%H_%M_%S")
                         download_filename = "Outliers{download_time}.xlsx"
                         outliers_download(dataframes, download_filename)
                         with open(download_filename, "rb") as file:
