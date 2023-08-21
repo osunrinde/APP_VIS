@@ -75,7 +75,7 @@ if authentication_status == None:
 
 if authentication_status:
     #plot function
-    @st.cache_data
+    #@st.cache_data
    
     def PXCU_PQLT_PLOT(data_plot, x_col, y_col, Ore_Type, plot_title):
         if x_col=='PXCU' and y_col=='PQLT':
