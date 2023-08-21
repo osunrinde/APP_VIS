@@ -512,7 +512,7 @@ if authentication_status:
         for sheet_name, df in dataframes.items():
             df.to_excel(doc_writer, sheet_name=sheet_name, index=False)
 
-        doc_writer.save()
+        doc_writer.close()
 
 
 
