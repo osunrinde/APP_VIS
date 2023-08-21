@@ -18,7 +18,7 @@ import streamlit_authenticator as stauth
 import pickle
 from pathlib import Path
 import time
-
+from datetime import datetime
 
 ############################
 
@@ -540,9 +540,9 @@ if authentication_status:
 
         # plot buttons
         st.sidebar.header("Plot Settings")
-        x_col = st.sidebar.selectbox("Select X Column", [""])
-        y_col = st.sidebar.selectbox("Select Y Column", [""])
-        Ore_Type=st.sidebar.selectbox("Select Ore_type Column", [""])
+        #x_col = st.sidebar.selectbox("Select X Column", [""])
+        #y_col = st.sidebar.selectbox("Select Y Column", [""])
+        #Ore_Type=st.sidebar.selectbox("Select Ore_type Column", [""])
         plot_title = st.sidebar.text_input("Enter Plot Title")
          #user input for data filtering
         filtering=st.sidebar.number_input('Default TCU-Cutoff value', value=0.1)
@@ -664,7 +664,8 @@ if authentication_status:
                 with download_button:
                     if st.button("Download Outliers"):
                         time.sleep(3)
-                        download_filename = "new_Outliers.xlsx"
+                        download_time=datetime.now().strftime(%m%d%y_%H_%M_%S")
+                        download_filename = "Outliers{download_time}.xlsx"
                         outliers_download(dataframes, download_filename)
                         with open(download_filename, "rb") as file:
                             st.download_button(label="download", data=file.read(), file_name=download_filename, key="download_button")
