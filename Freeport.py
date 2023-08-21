@@ -507,12 +507,12 @@ if authentication_status:
             #plt.show()
     #function to download dataframe to excel
     def outliers_download(dataframes, filename):
-        doc_writer = pd.ExcelWriter(filename, engine='xlsxwriter')
-
-        for sheet_name, df in dataframes.items():
-            df.to_excel(doc_writer, sheet_name=sheet_name, index=False)
-
-        doc_writer.close()
+        with st.spinner("processing outliers....."):
+            doc_writer = pd.ExcelWriter(filename, engine='xlsxwriter')
+            for sheet_name, df in dataframes.items():
+                df.to_excel(doc_writer, sheet_name=sheet_name, index=False)
+            doc_writer.close()
+        st.success("outliers has been processed successfully and read for download")
 
 
 
@@ -663,10 +663,11 @@ if authentication_status:
                         #outlier execution button
                 with download_button:
                     if st.button("Download Outliers"):
-                        with st.spinner('Downloading outliers....'):
-                            time.sleep(3)
-                            download_filename = "Outliers.xlsx"
-                            outliers_download(dataframes, download_filename)
+                        time.sleep(3)
+                        download_filename = "new_Outliers.xlsx"
+                        outliers_download(dataframes, download_filename)
+                        with open(download_filename, "rb") as file:
+                            st.download_button(label="download", data=file.read(), file_name=download_filename, key="download_button")
                             st.write(f'there are {idx.sum():,} OT21 Outliers  of the {len(idx):,} holes')
                             st.write(f'there are {idx1.sum():,} OT22 Outliers  of the {len(idx1):,} holes')
                             st.write(f'there are {idx2.sum():,} OT27 Outliers  of the {len(idx2):,} holes')
