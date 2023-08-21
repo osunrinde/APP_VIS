@@ -38,7 +38,7 @@ st.set_page_config(
 
 #stlying the application logo
 
-image= Image.open("C:/Users/tosunrin/Music/logo.png")
+image= Image.open("./Extras/logo.png")
 st.image(image, use_column_width=True)
 
 #customizing the dashboard header
