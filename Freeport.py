@@ -530,7 +530,7 @@ if authentication_status:
 
         if not modify:
             return df
-        df = df.copy()
+        df = data.copy()
 
         # Try to convert datetimes into a standard format (datetime, no timezone)
         for col in df.columns:
