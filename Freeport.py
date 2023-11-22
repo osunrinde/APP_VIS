@@ -517,19 +517,19 @@ if authentication_status:
 
     #filtering function
     def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Adds a UI on top of a dataframe to let viewers filter columns
+        """
+        Adds a UI on top of a dataframe to let viewers filter columns
 
-    Args:
+        Args:
         df (pd.DataFrame): Original dataframe
 
-    Returns:
-        pd.DataFrame: Filtered dataframe
-    """
-    modify = st.checkbox("Add filters")
+        Returns:
+            pd.DataFrame: Filtered dataframe
+        """
+        modify = st.checkbox("Add filters")
 
-    if not modify:
-        return df
+        if not modify:
+            return df
 
 
 
