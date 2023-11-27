@@ -514,37 +514,10 @@ if authentication_status:
             doc_writer.close()
         st.success("outliers has been processed successfully and read for download")
 
+# Function to check if the list is empty
+    def is_list_empty(lst):
+        return not lst 
 
-    #filtering function
-    def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
-        """
-        Adds a UI on top of a dataframe to let viewers filter columns
-
-        Args:
-        df (pd.DataFrame): Original dataframe
-
-        Returns:
-            pd.DataFrame: Filtered dataframe
-        """
-        modify = st.checkbox("Add filters")
-
-        if not modify:
-            return df
-        df = data.copy()
-
-        # Try to convert datetimes into a standard format (datetime, no timezone)
-        for col in df.columns:
-            if is_object_dtype(df[col]):
-    	        try:
-    	            df[col] = pd.to_datetime(df[col])
-    	        except Exception:
-    	            pass
-
-            if is_datetime64_any_dtype(df[col]):
-                df[col] = df[col].dt.tz_localize(None)
-        modification_container = st.container()
-        with modification_container:
-            to_filter_columns = st.multiselect("Filter dataframe on", df.columns)
 
 
 
@@ -588,8 +561,28 @@ if authentication_status:
                 # Continue processing the DataFrame
                 except UnicodeDecodeError:
                     data = pd.read_csv(files, encoding='ISO-8859-1')  # or encoding='cp1252'  
+                    # Copy DataFrame
+                    data_C = data.copy()
 
                 st.sidebar.write("File uploaded successfully!")
+                 
+                # Select column to filter
+                column_to_filter = st.sidebar.selectbox("Select column to filter:", data_C.columns)
+
+                # Sidebar with filtering options
+                st.sidebar.header("Filter Options")
+                filter_input = st.sidebar.text_input("Enter the holes to be filtered (comma-separated):")
+                filter_list = [x.strip() for x in filter_input.split(',')]
+
+                # Apply filtering logic
+                if is_list_empty(filter_list):
+                    data = data_C
+                    st.subheader("Filtered DataFrame:")
+                    st.dataframe(data)
+                else:
+                    data = data_C.loc[d[column_to_filter].str.startswith(tuple(filter_list))]
+                    st.subheader("Filtered DataFrame:")
+                    st.dataframe(data)
 
                 columns = data.columns.tolist()
                 #y_options = data.columns.tolist()
