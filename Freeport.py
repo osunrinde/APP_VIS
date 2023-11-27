@@ -557,12 +557,12 @@ if authentication_status:
             for files in uploaded_file:
                 # Process the uploaded file here
                 try:
-                    data = pd.read_csv(files)
+                    data_ = pd.read_csv(files)
                 # Continue processing the DataFrame
                 except UnicodeDecodeError:
-                    data = pd.read_csv(files, encoding='ISO-8859-1')  # or encoding='cp1252'  
+                    data_ = pd.read_csv(files, encoding='ISO-8859-1')  # or encoding='cp1252'  
                     # Copy DataFrame
-                    data_C = data.copy()
+                    data_C = data_.copy()
 
                 st.sidebar.write("File uploaded successfully!")
                  
