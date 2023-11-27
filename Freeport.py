@@ -550,8 +550,8 @@ if authentication_status:
         #Ore_Type=st.sidebar.selectbox("Select Ore_type Column", [""])
         plot_title = st.sidebar.text_input("Enter Plot Title")
          #user input for data filtering
-        filtering=st.sidebar.number_input('Default TCU-Cutoff value', value=0.1)
-        st.sidebar.write("change default TCU-Cutoff value if needed")
+        #filtering=st.sidebar.number_input('Default TCU-Cutoff value', value=0.1)
+        #st.sidebar.write("change default TCU-Cutoff value if needed")
 
         if uploaded_file is not None:
             for files in uploaded_file:
@@ -565,14 +565,18 @@ if authentication_status:
                 data_C = data_.copy()
 
                 st.sidebar.write("File uploaded successfully!")
-                 
-                # Select column to filter
-                column_to_filter = st.sidebar.selectbox("Select column to filter:", data_C.columns)
 
                 # Sidebar with filtering options
                 st.sidebar.header("Filter Options")
+                
+                # Select column to filter
+                column_to_filter = st.sidebar.selectbox("Select column to filter:", data_C.columns)
                 filter_input = st.sidebar.text_input("Enter the holes to be filtered (comma-separated):")
                 filter_list = [x.strip() for x in filter_input.split(',')]
+
+                #user input for data filtering
+                filtering=st.sidebar.number_input('Default TCU-Cutoff value', value=0.1)
+                st.sidebar.write("change the default TCU-Cutoff value if needed")
 
                 # Apply filtering logic
                 if is_list_empty(filter_list):
