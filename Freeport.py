@@ -561,8 +561,8 @@ if authentication_status:
                 # Continue processing the DataFrame
                 except UnicodeDecodeError:
                     data_ = pd.read_csv(files, encoding='ISO-8859-1')  # or encoding='cp1252'  
-                # Copy DataFrame
-                data_C = data_.copy()
+                    # Copy DataFrame
+                    data_C = data_.copy()
 
                 st.sidebar.write("File uploaded successfully!")
                  
@@ -580,7 +580,7 @@ if authentication_status:
                     st.subheader("Filtered DataFrame:")
                     st.dataframe(data)
                 else:
-                    data = data_C.loc[d[column_to_filter].str.startswith(tuple(filter_list))]
+                    data = data_C.loc[data_C[column_to_filter].str.startswith(tuple(filter_list))]
                     st.subheader("Filtered DataFrame:")
                     st.dataframe(data)
 
