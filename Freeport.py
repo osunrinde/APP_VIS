@@ -600,7 +600,7 @@ if authentication_status:
                     st.subheader("Filtered Assay Data:")
                     st.dataframe(data_plot)
 
-                columns = data.columns.tolist()
+                #columns = data.columns.tolist()
                 #y_options = data.columns.tolist()
                 #z_options = data.columns.tolist()
                 #create plot settings
