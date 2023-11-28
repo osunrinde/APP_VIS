@@ -77,9 +77,9 @@ if authentication_status:
     #plot function
     #@st.cache_data
    
-    def PXCU_PQLT_PLOT(data_plot, x_col, y_col, Ore_Type, plot_title):
+    def PXCU_PQLT_PLOT(data_plot, x_col, y_col, Ore_Type, LITH, plot_title):
         if x_col=='PXCU' and y_col=='PQLT':
-            cols_ = [Ore_Type, "LITH"]
+            cols_ = [Ore_Type, LITH]
             for col_ in cols_:
                 idx3 = data_plot[col_].isin([-2147483648, -1,-2])
                 data_plot.loc[idx3, col_] = np.nan
@@ -298,7 +298,7 @@ if authentication_status:
             st.write("Note: Interactive dashboard is displayed above.")
             #plt.show()
         else:
-            cols_1 = [Ore_Type,"LITH"]
+            cols_1 = [Ore_Type,LITH]
             for col_1 in cols_1:
                 idx_= data_plot[col_1].isin([-2147483648,-1,-2])
                 data_plot.loc[idx_, col_1]=np.nan
@@ -583,6 +583,7 @@ if authentication_status:
                     'x_col': None,
                     'y_col': None,
                     'Ore_Type': None,
+                    'LITH':None,
                     }
                 columns = data_C.columns.tolist()
                 #create plot settings
@@ -591,6 +592,7 @@ if authentication_status:
                 st.session_state.x_col= st.sidebar.selectbox("Select X Column",columns)
                 st.session_state.y_col= st.sidebar.selectbox("Select Y Column",columns)
                 st.session_state.Ore_Type=st.sidebar.selectbox("Select Ore_type Column", columns, index=0)
+                st.session_state.LITH=st.sidebar.selectbox("Select Lithology Column", columns, index=0)
 
                 # Apply filtering logic
                 if is_list_empty(filter_list):
@@ -703,7 +705,7 @@ if authentication_status:
             with plot_button:
                 if st.button("Plot"):
                     with st.spinner("Generating plot..."):
-                        st.session_state.plot=PXCU_PQLT_PLOT(data_plot, st.session_state.x_col, st.session_state.y_col, st.session_state.Ore_Type, plot_title)
+                        st.session_state.plot=PXCU_PQLT_PLOT(data_plot, st.session_state.x_col, st.session_state.y_col, st.session_state.Ore_Type, st.session_state.LITH, plot_title)
                         st.pyplot(st.session_state.plot)
                         st.set_option('deprecation.showPyplotGlobalUse', False)
                         st.write("Note: Interactive dashboard is displayed above.")
