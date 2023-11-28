@@ -577,6 +577,14 @@ if authentication_status:
                 #user input for data filtering
                 filtering=st.sidebar.number_input('Default TCU-Cutoff value', value=0.1)
                 st.sidebar.write("change the default TCU-Cutoff value if needed")
+                
+                columns = data_C.columns.tolist()
+                #create plot settings
+                st.sidebar.header("Plot Settings")
+                plot_title = st.sidebar.text_input("Enter Plot Title")
+                x_col= st.sidebar.selectbox("Select X Column",columns)
+                y_col= st.sidebar.selectbox("Select Y Column",columns)
+                Ore_Type=st.sidebar.selectbox("Select Ore_type Column", columns)
 
                 # Apply filtering logic
                 if is_list_empty(filter_list):
@@ -596,11 +604,11 @@ if authentication_status:
                 #y_options = data.columns.tolist()
                 #z_options = data.columns.tolist()
                 #create plot settings
-                st.sidebar.header("Plot Settings")
-                plot_title = st.sidebar.text_input("Enter Plot Title")
-                x_col= st.sidebar.selectbox("Select X Column",columns)
-                y_col= st.sidebar.selectbox("Select Y Column",columns)
-                Ore_Type=st.sidebar.selectbox("Select Ore_type Column", columns)
+                #st.sidebar.header("Plot Settings")
+                #plot_title = st.sidebar.text_input("Enter Plot Title")
+               # x_col= st.sidebar.selectbox("Select X Column",columns)
+                #y_col= st.sidebar.selectbox("Select Y Column",columns)
+                #Ore_Type=st.sidebar.selectbox("Select Ore_type Column", columns)
                 
 
                 if (x_col and y_col and Ore_Type)== "":
@@ -609,12 +617,13 @@ if authentication_status:
                 #default filtering option
                     #data_plot=data.loc[data['TCU']>=0.1]
 
-                    data_plot = data_plot[~data_plot[Ore_Type].isin([10,50,51,52,53,54])]
+                    #data_plot = data_plot[~data_plot[Ore_Type].isin([10,50,51,52,53,54])]
 
 
                     if filtering !=0.1:
                         #default filtring option
                         data_plot=data.loc[data['TCU']>=filtering]
+                        data_plot = data_plot[~data_plot[Ore_Type].isin([10,50,51,52,53,54])]
                      
                     if x_col and y_col and Ore_Type and plot_title != None:
                         st.write('proceed to plot graph')
