@@ -578,13 +578,13 @@ if authentication_status:
                 filtering=st.sidebar.number_input('Default TCU-Cutoff value', value=0.1)
                 st.sidebar.write("change the default TCU-Cutoff value if needed")
                 
-                #columns = data_C.columns.tolist()
+                columns = data_C.columns.tolist()
                 #create plot settings
-                #st.sidebar.header("Plot Settings")
-                #plot_title = st.sidebar.text_input("Enter Plot Title")
-                #x_col= st.sidebar.selectbox("Select X Column",columns)
-                #y_col= st.sidebar.selectbox("Select Y Column",columns)
-                #Ore_Type=st.sidebar.selectbox("Select Ore_type Column", columns, index=0)
+                st.sidebar.header("Plot Settings")
+                plot_title = st.sidebar.text_input("Enter Plot Title")
+                x_col= st.sidebar.selectbox("Select X Column",columns)
+                y_col= st.sidebar.selectbox("Select Y Column",columns)
+                Ore_Type=st.sidebar.selectbox("Select Ore_type Column", columns, index=0)
 
                 # Apply filtering logic
                 if is_list_empty(filter_list):
@@ -600,15 +600,15 @@ if authentication_status:
                     st.subheader("Filtered Assay Data:")
                     st.dataframe(data_plot)
 
-                columns = data.columns.tolist()
+                #columns = data.columns.tolist()
                 #y_options = data.columns.tolist()
                 #z_options = data.columns.tolist()
                 #create plot settings
-                st.sidebar.header("Plot Settings")
-                plot_title = st.sidebar.text_input("Enter Plot Title")
-                x_col= st.sidebar.selectbox("Select X Column",columns)
-                y_col= st.sidebar.selectbox("Select Y Column",columns)
-                Ore_Type=st.sidebar.selectbox("Select Ore_type Column", columns)
+                #st.sidebar.header("Plot Settings")
+                #plot_title = st.sidebar.text_input("Enter Plot Title")
+                #x_col= st.sidebar.selectbox("Select X Column",columns)
+                #y_col= st.sidebar.selectbox("Select Y Column",columns)
+                #Ore_Type=st.sidebar.selectbox("Select Ore_type Column", columns)
                 
 
                 if (x_col and y_col and Ore_Type)== "":
