@@ -703,7 +703,7 @@ if authentication_status:
             with plot_button:
                 if st.button("Plot"):
                     with st.spinner("Generating plot..."):
-                        st.session_state.plot=PXCU_PQLT_PLOT(data_plot, x_col, y_col, Ore_Type, plot_title)
+                        st.session_state.plot=PXCU_PQLT_PLOT(data_plot, st.session_state.x_col, st.session_state.y_col, st.session_state.Ore_Type, plot_title)
                         st.pyplot(st.session_state.plot)
                         st.set_option('deprecation.showPyplotGlobalUse', False)
                         st.write("Note: Interactive dashboard is displayed above.")
