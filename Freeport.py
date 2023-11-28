@@ -617,7 +617,7 @@ if authentication_status:
                 #Ore_Type=st.sidebar.selectbox("Select Ore_type Column", columns)
                 
 
-                if (x_col and y_col and Ore_Type)== "":
+                if (st.session_state.x_col and st.session_state.y_col and st.session_state.Ore_Type)== "":
                     pass
                 else:
                 #default filtering option
