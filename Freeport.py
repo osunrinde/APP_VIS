@@ -544,11 +544,11 @@ if authentication_status:
         uploaded_file = st.sidebar.file_uploader("", type=["csv", "xlsx"], accept_multiple_files=True)
 
         # plot buttons
-        st.sidebar.header("Plot Settings")
+        #st.sidebar.header("Plot Settings")
         #x_col = st.sidebar.selectbox("Select X Column", [""])
         #y_col = st.sidebar.selectbox("Select Y Column", [""])
         #Ore_Type=st.sidebar.selectbox("Select Ore_type Column", [""])
-        plot_title = st.sidebar.text_input("Enter Plot Title")
+        #plot_title = st.sidebar.text_input("Enter Plot Title")
          #user input for data filtering
         #filtering=st.sidebar.number_input('Default TCU-Cutoff value', value=0.1)
         #st.sidebar.write("change default TCU-Cutoff value if needed")
@@ -581,17 +581,23 @@ if authentication_status:
                 # Apply filtering logic
                 if is_list_empty(filter_list):
                     data = data_C
-                    st.subheader("Filtered DataFrame:")
-                    st.dataframe(data)
+                    data_plot=data.loc[data['TCU']>=0.1]
+                    data_plot = data_plot[~data_plot[Ore_Type].isin([10,50,51,52,53,54])]
+                    st.subheader("Filtered Assay Data:")
+                    st.dataframe(data_plot)
                 else:
                     data = data_C.loc[data_C[column_to_filter].str.startswith(tuple(filter_list))]
-                    st.subheader("Filtered DataFrame:")
-                    st.dataframe(data)
+                    data_plot=data.loc[data['TCU']>=0.1]
+                    data_plot = data_plot[~data_plot[Ore_Type].isin([10,50,51,52,53,54])]
+                    st.subheader("Filtered Assay Data:")
+                    st.dataframe(data_plot)
 
                 columns = data.columns.tolist()
                 #y_options = data.columns.tolist()
                 #z_options = data.columns.tolist()
-
+                #create plot settings
+                st.sidebar.header("Plot Settings")
+                plot_title = st.sidebar.text_input("Enter Plot Title")
                 x_col= st.sidebar.selectbox("Select X Column",columns)
                 y_col= st.sidebar.selectbox("Select Y Column",columns)
                 Ore_Type=st.sidebar.selectbox("Select Ore_type Column", columns)
@@ -601,7 +607,7 @@ if authentication_status:
                     pass
                 else:
                 #default filtering option
-                    data_plot=data.loc[data['TCU']>=0.1]
+                    #data_plot=data.loc[data['TCU']>=0.1]
 
                     data_plot = data_plot[~data_plot[Ore_Type].isin([10,50,51,52,53,54])]
 
