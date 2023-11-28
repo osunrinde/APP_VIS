@@ -589,13 +589,13 @@ if authentication_status:
                 # Apply filtering logic
                 if is_list_empty(filter_list):
                     data = data_C
-                    #data_plot=data.loc[data['TCU']>=0.1]
+                    data_plot=data.loc[data['TCU']>=0.1]
                     #data_plot = data_plot[~data_plot[Ore_Type].isin([10,50,51,52,53,54])]
                     st.subheader("Filtered Assay Data:")
                     st.dataframe(data)
                 else:
                     data = data_C.loc[data_C[column_to_filter].str.startswith(tuple(filter_list))]
-                    #data_plot=data.loc[data['TCU']>=0.1]
+                    data_plot=data.loc[data['TCU']>=0.1]
                     #data_plot = data_plot[~data_plot[Ore_Type].isin([10,50,51,52,53,54])]
                     st.subheader("Filtered Assay Data:")
                     st.dataframe(data)
