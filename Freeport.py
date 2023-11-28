@@ -637,54 +637,54 @@ if authentication_status:
                         st.warning('select all necessary variable')
                     #creating outliers dataframe        
                     #Find OT21  Outliers
-                    idx=(~(data_plot['PQLT'].between(30, 60))&(data_plot[st.session_state.Ore_Type]==21) | ~(data_plot['PXCU'].between(20, 60))&
-                         (data_plot[st.session_state.Ore_Type]==21))
+                    idx=(~(data_plot['PQLT'].between(30, 60))&(data_plot[Ore_Type]==21) | ~(data_plot['PXCU'].between(20, 60))&
+                         (data_plot[Ore_Type]==21))
 
                     OT21_Outliers=data_plot.loc[idx].reset_index(drop=True)
 
                     #Find OT22  Outliers
-                    idx1=(~(data['PQLT'].between(60, 100))&(data[st.session_state.Ore_Type]==22) | ~(data['PXCU'].between(50, 100))&
-                          (data[st.session_state.Ore_Type]==22))
+                    idx1=(~(data['PQLT'].between(60, 100))&(data[Ore_Type]==22) | ~(data['PXCU'].between(50, 100))&
+                          (data[Ore_Type]==22))
                     OT22_Outliers=data.loc[idx1].reset_index(drop=True)
 
                     #Find OT27  Outliers
-                    idx2=(~(data_plot['PQLT'].between(0, 35))&(data_plot[st.session_state.Ore_Type]==27) | ~(data_plot['PXCU'].between(0, 35))&
-                          (data_plot[st.session_state.Ore_Type]==27))
+                    idx2=(~(data_plot['PQLT'].between(0, 35))&(data_plot[Ore_Type]==27) | ~(data_plot['PXCU'].between(0, 35))&
+                          (data_plot[Ore_Type]==27))
                     OT27_Outliers=data_plot.loc[idx2].reset_index(drop=True)
 
                     #Find OT31  Outliers
-                    idx3=(~(data_plot['PQLT'].between(50, 100))&(data_plot[st.session_state.Ore_Type]==31) | ~(data_plot['PXCU'].between(20, 50))&
-                          (data_plot[st.session_state.Ore_Type]==31))
+                    idx3=(~(data_plot['PQLT'].between(50, 100))&(data_plot[Ore_Type]==31) | ~(data_plot['PXCU'].between(20, 50))&
+                          (data_plot[Ore_Type]==31))
 
                     OT31_Outliers=data_plot.loc[idx3].reset_index(drop=True)
 
                     #Find OT32  Outliers
-                    idx8=(~(data_plot['PQLT'].between(35, 57))&(data_plot[st.session_state.Ore_Type]==32) | ~(data_plot['PXCU'].between(0, 20))&
-                          (data_plot[st.session_state.Ore_Type]==32))
+                    idx8=(~(data_plot['PQLT'].between(35, 57))&(data_plot[Ore_Type]==32) | ~(data_plot['PXCU'].between(0, 20))&
+                          (data_plot[Ore_Type]==32))
                     OT32_Outliers=data_plot.loc[idx8].reset_index(drop=True)
 
 
                     #Find OT34  Outliers
-                    idx4=(~(data_plot['PQLT'].between(57, 100))&(data_plot[st.session_state.Ore_Type]==34) | ~(data_plot['PXCU'].between(0, 20))&
-                          (data_plot[st.session_state.Ore_Type]==34))
+                    idx4=(~(data_plot['PQLT'].between(57, 100))&(data_plot[Ore_Type]==34) | ~(data_plot['PXCU'].between(0, 20))&
+                          (data_plot[Ore_Type]==34))
 
                     OT34_Outliers=data_plot.loc[idx4].reset_index(drop=True)
 
                     #Find OT37  Outliers
-                    idx5=(~(data_plot['PQLT'].between(15, 25))&(data_plot[st.session_state.Ore_Type]==37) | ~(data_plot['PXCU'].between(0, 20))&
-                          (data_plot[st.session_state.Ore_Type]==37))
+                    idx5=(~(data_plot['PQLT'].between(15, 25))&(data_plot[Ore_Type]==37) | ~(data_plot['PXCU'].between(0, 20))&
+                          (data_plot[Ore_Type]==37))
 
                     OT37_Outliers=data_plot.loc[idx5].reset_index(drop=True)
 
                     #Find OT41  Outliers
-                    idx6=(~(data_plot['PQLT'].between(0, 15))&(data_plot[st.session_state.Ore_Type]==41) | ~(data_plot['PXCU'].between(0, 15))&
-                          (data_plot[st.session_state.Ore_Type]==41))
+                    idx6=(~(data_plot['PQLT'].between(0, 15))&(data_plot[Ore_Type]==41) | ~(data_plot['PXCU'].between(0, 15))&
+                          (data_plot[Ore_Type]==41))
 
                     OT41_Outliers=data_plot.loc[idx6].reset_index(drop=True)
 
                     #Find OT42  Outliers
-                    idx7=(~(data_plot['PQLT'].between(15, 35))&(data_plot[st.session_state.Ore_Type]==42) | ~(data_plot['PXCU'].between(0, 15))&
-                          (data_plot[st.session_state.Ore_Type]==42))
+                    idx7=(~(data_plot['PQLT'].between(15, 35))&(data_plot[Ore_Type]==42) | ~(data_plot['PXCU'].between(0, 15))&
+                          (data_plot[Ore_Type]==42))
 
                     OT42_Outliers=data_plot.loc[idx7].reset_index(drop=True)
 
