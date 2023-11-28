@@ -615,9 +615,9 @@ if authentication_status:
                     pass
                 else:
                 #default filtering option
-                    data_plot=data.loc[data['TCU']>=0.1]
+                    #data_plot=data.loc[data['TCU']>=0.1]
 
-                    data_plot = data_plot[~data_plot[Ore_Type].isin([10,50,51,52,53,54])]
+                    #data_plot = data_plot[~data_plot[Ore_Type].isin([10,50,51,52,53,54])]
 
 
                     if filtering !=0.1:
