@@ -584,7 +584,7 @@ if authentication_status:
                 plot_title = st.sidebar.text_input("Enter Plot Title")
                 x_col= st.sidebar.selectbox("Select X Column",columns)
                 y_col= st.sidebar.selectbox("Select Y Column",columns)
-                Ore_Type=st.sidebar.selectbox("Select Ore_type Column", columns)
+                Ore_Type=st.sidebar.selectbox("Select Ore_type Column", columns, index=0)
 
                 # Apply filtering logic
                 if is_list_empty(filter_list):
