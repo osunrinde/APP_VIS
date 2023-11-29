@@ -593,6 +593,15 @@ if authentication_status:
                 st.session_state.y_col= st.sidebar.selectbox("Select Y Column",columns)
                 st.session_state.Ore_Type=st.sidebar.selectbox("Select Ore_type Column", columns, index=0)
                 st.session_state.LITH=st.sidebar.selectbox("Select Lithology Column", columns, index=0)
+                #data check
+
+                if (data_C[st.session_state.Ore_Type]==99).all() and (data_C['TCU] >=0).all():
+                    data_N=data_C[(data_C[st.session_state.Ore_Type] == 99) & (data_C['TCU'] >= 0)]
+                    st.dataframe(data_N)
+                    st.warning('please check assay data and correct before proceeding with the plot')
+                else:
+                    pass
+        
 
                 # Apply filtering logic
                 if is_list_empty(filter_list):
