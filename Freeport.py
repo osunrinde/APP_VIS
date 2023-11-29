@@ -600,22 +600,19 @@ if authentication_status:
                     st.dataframe(data_N)
                     st.warning('please check assay data and correct before proceeding with the plot')
                 else:
-                    pass
-        
-
-                # Apply filtering logic
-                if is_list_empty(filter_list):
-                    data = data_C
-                    data_plot=data.loc[data['TCU']>=0.1]
-                    data_plot = data_plot[~data_plot[zt.session_state.Ore_Type].isin([10,50,51,52,53,54])]
-                    st.subheader("Filtered Assay Data:")
-                    st.dataframe(data_plot)
-                else:
-                    data = data_C.loc[data_C[column_to_filter].str.startswith(tuple(filter_list))]
-                    data_plot=data.loc[data['TCU']>=0.1]
-                    data_plot = data_plot[~data_plot[st.session_state.Ore_Type].isin([10,50,51,52,53,54])]
-                    st.subheader("Filtered Assay Data:")
-                    st.dataframe(data_plot)
+                    # Apply filtering logic
+                    if is_list_empty(filter_list):
+                        data = data_C
+                        data_plot=data.loc[data['TCU']>=0.1]
+                        data_plot = data_plot[~data_plot[zt.session_state.Ore_Type].isin([10,50,51,52,53,54])]
+                        st.subheader("Filtered Assay Data:")
+                        st.dataframe(data_plot)
+                    else:
+                        data = data_C.loc[data_C[column_to_filter].str.startswith(tuple(filter_list))]
+                        data_plot=data.loc[data['TCU']>=0.1]
+                        data_plot = data_plot[~data_plot[st.session_state.Ore_Type].isin([10,50,51,52,53,54])]
+                        st.subheader("Filtered Assay Data:")
+                        st.dataframe(data_plot)
 
                 #columns = data.columns.tolist()
                 #y_options = data.columns.tolist()
