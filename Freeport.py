@@ -599,6 +599,8 @@ if authentication_status:
                     data_N=data_C[(data_C[st.session_state.Ore_Type] == 99) & (data_C['TCU'] >= 0)]
                     st.dataframe(data_N)
                     st.warning('please check assay data and correct before proceeding with the plot')
+                    #this stops the code rom running other section of the app until user input the right data
+                    st.stop()
                 else:
                     # Apply filtering logic
                     if is_list_empty(filter_list):
