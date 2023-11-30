@@ -558,6 +558,7 @@ if authentication_status:
                 # Process the uploaded file here
                 try:
                     data_ = pd.read_csv(files)
+                   
                 # Continue processing the DataFrame
                 except UnicodeDecodeError:
                     data_ = pd.read_csv(files, encoding='ISO-8859-1')  # or encoding='cp1252'  
@@ -593,14 +594,32 @@ if authentication_status:
                 st.session_state.y_col= st.sidebar.selectbox("Select Y Column",columns)
                 st.session_state.Ore_Type=st.sidebar.selectbox("Select Ore_type Column", columns, index=0)
                 st.session_state.LITH=st.sidebar.selectbox("Select Lithology Column", columns, index=0)
-                #data check
+                #data check 
+                #drop rows with ortp==99 and not having grades in it. This is because they are not needed for plotting or modelling
+                data_C=data_C[~((data_C[st.session_state.Ore_Type] == 99) & (data_C['TCU'].isin([-1,-2])))]
+
+                #check if assay data has ore type 99 and has grade present in it. This is to help geologists know what holes to fix in the database
 
                 if (data_C[st.session_state.Ore_Type]==99).any() and (data_C['TCU'] >=0).any():
                     data_N=data_C[(data_C[st.session_state.Ore_Type] == 99) & (data_C['TCU'] >= 0)]
+                    st.subheader("ORTP 99 Assay Data:")
                     st.dataframe(data_N)
-                    st.warning('please check assay data and correct before proceeding with the plot')
-                    #this stops the code rom running other section of the app until user input the right data
-                    st.stop()
+                    st.warning('please check assay. This data will automatically be filtered out and would not be considered in the plot')
+                    # Apply filtering logic
+                    if is_list_empty(filter_list):
+                        data = data_C[~((data_C[st.session_state.Ore_Type] == 99) & (data_C['TCU'] >= 0))]
+                        data_plot=data.loc[data['TCU']>=0.1]
+                        data_plot = data_plot[~data_plot[st.session_state.Ore_Type].isin([10,50,51,52,53,54])]
+                        st.subheader("Filtered Assay Data:")
+                        st.dataframe(data_plot)
+                    else:
+                        data = data_C[~((data_C[st.session_state.Ore_Type] == 99) & (data_C['TCU'] >= 0))]
+                        data = data.loc[data[column_to_filter].str.startswith(tuple(filter_list))]
+                        data_plot=data.loc[data['TCU']>=0.1]
+                        data_plot = data_plot[~data_plot[st.session_state.Ore_Type].isin([10,50,51,52,53,54])]
+                        st.subheader("Filtered Assay Data:")
+                        st.dataframe(data_plot)
+                    
                 else:
                     # Apply filtering logic
                     if is_list_empty(filter_list):
@@ -710,7 +729,7 @@ if authentication_status:
                     dataframes = {'OT21_Outliers': OT21_Outliers, 'OT22_Outliers': OT22_Outliers, 'OT27_Outliers': OT27_Outliers, 
                                   'OT31_Outliers': OT31_Outliers, 'OT32_Outliers': OT32_Outliers,
                                   'OT34_Outliers': OT34_Outliers, 'OT37_Outliers': OT37_Outliers, 'OT41_Outliers': OT41_Outliers, 
-                                  'OT42_Outliers': OT42_Outliers}
+                                  'OT42_Outliers': OT42_Outliers, 'ORTP_99_Outliers': data_N}
 
 
                     #creating columns for the plot and download buttons
