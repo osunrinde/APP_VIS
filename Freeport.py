@@ -745,14 +745,15 @@ if authentication_status:
                     def click_button():
                         st.session_state.clicked = True
                     
-                    if st.button("Download Outliers", on_click=click_button):
+                    if st.button("Process Outliers"):
                         time.sleep(3)
                         download_time=datetime.now().strftime("%m%d%y_%H_%M_%S")
                         download_filename = f"Outliers_{download_time}.xlsx"
                         outliers_download(dataframes, download_filename)
                         with open(download_filename, "rb") as file:
-                            #st.download_button(label="download", data=file.read(), file_name=download_filename, key="download_button")
-                            #st.success("Outliers successfully downloaded to your PC")
+                            st.download_button(label="download", data=file.read(), file_name=download_filename, key="download_button", on_click=click_button)
+                            if st.session_state.clicked:
+                                st.success("Outliers successfully downloaded to your PC")
                             st.write(f'there are {idx.sum():,} OT21 Outliers  of the {len(idx):,} holes')
                             st.write(f'there are {idx1.sum():,} OT22 Outliers  of the {len(idx1):,} holes')
                             st.write(f'there are {idx2.sum():,} OT27 Outliers  of the {len(idx2):,} holes')
@@ -762,9 +763,7 @@ if authentication_status:
                             st.write(f'there are {idx5.sum():,} OT37 Outliers of the {len(idx5):,} holes')
                             st.write(f'there are {idx6.sum():,} OT41 Outliers of the {len(idx6):,} holes')
                             st.write(f'there are {idx7.sum():,} OT42 Outliers of the {len(idx7):,} holes')
-                if st.session_state.clicked:
-                # The message and nested widget will remain on the page
-                    st.success("Outliers successfully downloaded to your PC")
+            
                             
 
 
