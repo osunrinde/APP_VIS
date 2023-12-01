@@ -563,7 +563,7 @@ if authentication_status:
                 except UnicodeDecodeError:
                     data_ = pd.read_csv(files, encoding='ISO-8859-1')  # or encoding='cp1252'  
                 # Copy DataFrame
-                data_C = data_.copy()
+                #data_C = data_.copy()
 
                 st.sidebar.write("File uploaded successfully!")
 
@@ -596,7 +596,7 @@ if authentication_status:
                 st.session_state.LITH=st.sidebar.selectbox("Select Lithology Column", columns, index=0)
                 #data check 
                 #drop rows with ortp==99 and not having grades in it. This is because they are not needed for plotting or modelling
-                data_C=data_C[~((data_C[st.session_state.Ore_Type] == 99) & (data_C['TCU'].isin([-1,-2])))]
+                data_C=data_[~((data_[st.session_state.Ore_Type] == 99) & (data_['TCU'].isin([-1,-2])))]
 
                 #check if assay data has ore type 99 and has grade present in it. This is to help geologists know what holes to fix in the database
 
