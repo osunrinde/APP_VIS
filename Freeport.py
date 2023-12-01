@@ -751,7 +751,7 @@ if authentication_status:
                         download_filename = f"Outliers_{download_time}.xlsx"
                         outliers_download(dataframes, download_filename)
                         with open(download_filename, "rb") as file:
-                            st.download_button(label="download", data=file.read(), file_name=download_filename, key="download_button")
+                            #st.download_button(label="download", data=file.read(), file_name=download_filename, key="download_button")
                             #st.success("Outliers successfully downloaded to your PC")
                             st.write(f'there are {idx.sum():,} OT21 Outliers  of the {len(idx):,} holes')
                             st.write(f'there are {idx1.sum():,} OT22 Outliers  of the {len(idx1):,} holes')
@@ -764,7 +764,7 @@ if authentication_status:
                             st.write(f'there are {idx7.sum():,} OT42 Outliers of the {len(idx7):,} holes')
                 if st.session_state.clicked:
                 # The message and nested widget will remain on the page
-                    st.write("Outliers successfully downloaded to your PC")
+                    st.success("Outliers successfully downloaded to your PC")
                             
 
 
