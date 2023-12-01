@@ -605,35 +605,21 @@ if authentication_status:
                     st.subheader("ORTP 99 Assay Data:")
                     st.dataframe(data_N)
                     st.warning('please check assay. This data will automatically be filtered out and would not be considered in the plot')
-                    # Apply filtering logic
-                    if is_list_empty(filter_list):
-                        data = data_C[~((data_C[st.session_state.Ore_Type] == 99) & (data_C['TCU'] >= 0))]
-                        data_plot=data.loc[data['TCU']>=0.1]
-                        data_plot = data_plot[~data_plot[st.session_state.Ore_Type].isin([10,50,51,52,53,54])]
-                        st.subheader("Filtered Assay Data:")
-                        st.dataframe(data_plot)
-                    else:
-                        data = data_C[~((data_C[st.session_state.Ore_Type] == 99) & (data_C['TCU'] >= 0))]
-                        data = data.loc[data[column_to_filter].str.startswith(tuple(filter_list))]
-                        data_plot=data.loc[data['TCU']>=0.1]
-                        data_plot = data_plot[~data_plot[st.session_state.Ore_Type].isin([10,50,51,52,53,54])]
-                        st.subheader("Filtered Assay Data:")
-                        st.dataframe(data_plot)
-                    
+                # Apply filtering logic
+                if is_list_empty(filter_list):
+                    data = data_C[~((data_C[st.session_state.Ore_Type] == 99) & (data_C['TCU'] >= 0))]
+                    data_plot=data.loc[data['TCU']>=0.1]
+                    data_plot = data_plot[~data_plot[st.session_state.Ore_Type].isin([10,50,51,52,53,54])]
+                    st.subheader("Filtered Assay Data:")
+                    st.dataframe(data_plot)
                 else:
-                    # Apply filtering logic
-                    if is_list_empty(filter_list):
-                        data = data_C
-                        data_plot=data.loc[data['TCU']>=0.1]
-                        data_plot = data_plot[~data_plot[st.session_state.Ore_Type].isin([10,50,51,52,53,54])]
-                        st.subheader("Filtered Assay Data:")
-                        st.dataframe(data_plot)
-                    else:
-                        data = data_C.loc[data_C[column_to_filter].str.startswith(tuple(filter_list))]
-                        data_plot=data.loc[data['TCU']>=0.1]
-                        data_plot = data_plot[~data_plot[st.session_state.Ore_Type].isin([10,50,51,52,53,54])]
-                        st.subheader("Filtered Assay Data:")
-                        st.dataframe(data_plot)
+                    data = data_C[~((data_C[st.session_state.Ore_Type] == 99) & (data_C['TCU'] >= 0))]
+                    data = data.loc[data[column_to_filter].str.startswith(tuple(filter_list))]
+                    data_plot=data.loc[data['TCU']>=0.1]
+                    data_plot = data_plot[~data_plot[st.session_state.Ore_Type].isin([10,50,51,52,53,54])]
+                    st.subheader("Filtered Assay Data:")
+                    st.dataframe(data_plot)
+                    
 
                 #columns = data.columns.tolist()
                 #y_options = data.columns.tolist()
