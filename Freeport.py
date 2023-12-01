@@ -712,13 +712,14 @@ if authentication_status:
                     OT42_Outliers['FLAGD']=5
 
                     #ORTP 99 outliers
-                    data_N['FLAGD']=5
+                    ORTP_99=data_C[(data_C[st.session_state.Ore_Type] == 99) & (data_C['TCU'] >= 0)]
+                    ORTP_99['FLAGD']=5
 
                     #put all outliers into dataframe
                     dataframes = {'OT21_Outliers': OT21_Outliers, 'OT22_Outliers': OT22_Outliers, 'OT27_Outliers': OT27_Outliers, 
                                   'OT31_Outliers': OT31_Outliers, 'OT32_Outliers': OT32_Outliers,
                                   'OT34_Outliers': OT34_Outliers, 'OT37_Outliers': OT37_Outliers, 'OT41_Outliers': OT41_Outliers, 
-                                  'OT42_Outliers': OT42_Outliers,'ORTP_99_Outliers':data_N}
+                                  'OT42_Outliers': OT42_Outliers,'ORTP_99_Outliers':ORTP_99}
 
 
                     #creating columns for the plot and download buttons
