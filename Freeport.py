@@ -571,7 +571,7 @@ if authentication_status:
                 st.sidebar.header("Filter Options")
                 
                 # Select column to filter
-                column_to_filter = st.sidebar.selectbox("Select column to filter:", data_C.columns)
+                column_to_filter = st.sidebar.selectbox("Select column to filter:", data_.columns)
                 filter_input = st.sidebar.text_input("Enter the holes to be filtered (comma-separated):")
                 filter_list = [x.strip() for x in filter_input.split(',')]
 
@@ -586,7 +586,7 @@ if authentication_status:
                     'Ore_Type': None,
                     'LITH':None,
                     }
-                columns = data_C.columns.tolist()
+                columns = data_.columns.tolist()
                 #create plot settings
                 st.sidebar.header("Plot Settings")
                 plot_title = st.sidebar.text_input("Enter Plot Title")
