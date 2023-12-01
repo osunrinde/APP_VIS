@@ -729,7 +729,7 @@ if authentication_status:
                     dataframes = {'OT21_Outliers': OT21_Outliers, 'OT22_Outliers': OT22_Outliers, 'OT27_Outliers': OT27_Outliers, 
                                   'OT31_Outliers': OT31_Outliers, 'OT32_Outliers': OT32_Outliers,
                                   'OT34_Outliers': OT34_Outliers, 'OT37_Outliers': OT37_Outliers, 'OT41_Outliers': OT41_Outliers, 
-                                  'OT42_Outliers': OT42_Outliers, 'ORTP_99_Outliers': data_N}
+                                  'OT42_Outliers': OT42_Outliers,}
 
 
                     #creating columns for the plot and download buttons
