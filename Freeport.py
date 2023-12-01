@@ -503,7 +503,7 @@ if authentication_status:
 
             plt.legend(handles=[OT21_patch,OT22_patch, OT27_patch,OT31_patch,OT32_patch,OT33_patch, OT34_patch,
                             OT37_patch,OT41_patch,OT42_patch, Overlap_patch])
-            st.write("Note: Interactive dashboard is displayed above.")
+            #st.write("Note: Interactive dashboard is displayed above.")
             #plt.show()
     #function to download dataframe to excel
     def outliers_download(dataframes, filename):
@@ -604,7 +604,7 @@ if authentication_status:
                     data_N=data_C[(data_C[st.session_state.Ore_Type] == 99) & (data_C['TCU'] >= 0)]
                     st.subheader("ORTP 99 Assay Data:")
                     st.dataframe(data_N)
-                    st.warning('please check assay. This data will automatically be filtered out and would not be considered in the plot')
+                    st.warning('please check assay data and correct as needed. This data will automatically be filtered out and would not be considered in the plot')
                 # Apply filtering logic
                 if is_list_empty(filter_list):
                     data = data_C[~((data_C[st.session_state.Ore_Type] == 99) & (data_C['TCU'] >= 0))]
@@ -711,11 +711,14 @@ if authentication_status:
                     OT42_Outliers=data_plot.loc[idx7].reset_index(drop=True)
                     OT42_Outliers['FLAGD']=5
 
+                    #ORTP 99 outliers
+                    data_N['FLAGD']=5
+
                     #put all outliers into dataframe
                     dataframes = {'OT21_Outliers': OT21_Outliers, 'OT22_Outliers': OT22_Outliers, 'OT27_Outliers': OT27_Outliers, 
                                   'OT31_Outliers': OT31_Outliers, 'OT32_Outliers': OT32_Outliers,
                                   'OT34_Outliers': OT34_Outliers, 'OT37_Outliers': OT37_Outliers, 'OT41_Outliers': OT41_Outliers, 
-                                  'OT42_Outliers': OT42_Outliers,}
+                                  'OT42_Outliers': OT42_Outliers,'ORTP_99_Outliers':data_N}
 
 
                     #creating columns for the plot and download buttons
@@ -742,6 +745,7 @@ if authentication_status:
                         outliers_download(dataframes, download_filename)
                         with open(download_filename, "rb") as file:
                             st.download_button(label="download", data=file.read(), file_name=download_filename, key="download_button")
+                            st.success("Outliers successfully downloaded to your PC")
                             st.write(f'there are {idx.sum():,} OT21 Outliers  of the {len(idx):,} holes')
                             st.write(f'there are {idx1.sum():,} OT22 Outliers  of the {len(idx1):,} holes')
                             st.write(f'there are {idx2.sum():,} OT27 Outliers  of the {len(idx2):,} holes')
@@ -751,7 +755,7 @@ if authentication_status:
                             st.write(f'there are {idx5.sum():,} OT37 Outliers of the {len(idx5):,} holes')
                             st.write(f'there are {idx6.sum():,} OT41 Outliers of the {len(idx6):,} holes')
                             st.write(f'there are {idx7.sum():,} OT42 Outliers of the {len(idx7):,} holes')
-                            st.success("Outliers successfully downloaded to your PC")
+                            
 
 
     if __name__ == "__main__":
