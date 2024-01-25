@@ -159,12 +159,7 @@ if authentication_status:
                                 OT37_patch, OT41_patch, OT42_patch, Overlap_patch])
 
         else:
-            cols_1 = [Ore_Type,LITH]
-            for col_1 in cols_1:
-                idx_= data_plot[col_1].isin([-2147483648,-1,-2])
-                data_plot.loc[idx_, col_1]=np.nan
-
-
+            
             colors = dict({10: '#6C3600', 21: '#005900', 22: '#00FF00', 27: '#FF8000', 31: '#00FFFF', 32: '#FF0000',
                            33: '#00008B', 34:
                                '#B22222', 37: '#A1A0FF', 41: '#FFB6C1', 42: '#6F00DD', 46: '#FEFE00', 50: '#CCFF66',
@@ -380,53 +375,50 @@ if authentication_status:
                     #Find OT27  Outliers
                     idx2=(~(data_plot['PQLT'].between(0, 35))&(data_plot[st.session_state.Ore_Type]==27) | ~(data_plot['PXCU'].between(0, 35))&
                           (data_plot[st.session_state.Ore_Type]==27))
-                    OT27_Outliers=data_plot.loc[idx2].reset_index(drop=True)
-                    OT27_Outliers['FLAGD']=5
+                    OT27_Outliers=data_plot.loc[[idx2].reset_index(drop=True), 'FLAGD']=5
+                
 
                     #Find OT31  Outliers
                     idx3=(~(data_plot['PQLT'].between(50, 100))&(data_plot[st.session_state.Ore_Type]==31) | ~(data_plot['PXCU'].between(20, 50))&
                           (data_plot[st.session_state.Ore_Type]==31))
 
-                    OT31_Outliers=data_plot.loc[idx3].reset_index(drop=True)
-                    OT31_Outliers['FLAGD']=5
-
+                    OT31_Outliers=data_plot.loc[[idx3].reset_index(drop=True), 'FLAGD']=5
+                
                     #Find OT32  Outliers
                     idx8=(~(data_plot['PQLT'].between(35, 57))&(data_plot[st.session_state.Ore_Type]==32) | ~(data_plot['PXCU'].between(0, 20))&
                           (data_plot[st.session_state.Ore_Type]==32))
-                    OT32_Outliers=data_plot.loc[idx8].reset_index(drop=True)
-                    OT32_Outliers['FLAGD']=5
-
+                    OT32_Outliers=data_plot.loc[[idx8].reset_index(drop=True), 'FLAGD']=5
+                
                     #Find OT34  Outliers
                     idx4=(~(data_plot['PQLT'].between(57, 100))&(data_plot[st.session_state.Ore_Type]==34) | ~(data_plot['PXCU'].between(0, 20))&
                           (data_plot[st.session_state.Ore_Type]==34))
 
-                    OT34_Outliers=data_plot.loc[idx4].reset_index(drop=True)
-                    OT34_Outliers['FLAGD']=5
+                    OT34_Outliers=data_plot.loc[[idx4].reset_index(drop=True), 'FLAGD']=5
 
                     #Find OT37  Outliers
                     idx5=(~(data_plot['PQLT'].between(15, 25))&(data_plot[st.session_state.Ore_Type]==37) | ~(data_plot['PXCU'].between(0, 20))&
                           (data_plot[st.session_state.Ore_Type]==37))
 
-                    OT37_Outliers=data_plot.loc[idx5].reset_index(drop=True)
-                    OT37_Outliers['FLAGD']=5
+                    OT37_Outliers=data_plot.loc[[idx5].reset_index(drop=True), 'FLAGD']=5
+    
 
                     #Find OT41  Outliers
                     idx6=(~(data_plot['PQLT'].between(0, 15))&(data_plot[st.session_state.Ore_Type]==41) | ~(data_plot['PXCU'].between(0, 15))&
                           (data_plot[st.session_state.Ore_Type]==41))
 
-                    OT41_Outliers=data_plot.loc[idx6].reset_index(drop=True)
-                    OT41_Outliers['FLAGD']=5
+                    OT41_Outliers=data_plot.loc[[idx6].reset_index(drop=True), 'FLAGD']=5
+            
 
                     #Find OT42  Outliers
                     idx7=(~(data_plot['PQLT'].between(15, 35))&(data_plot[st.session_state.Ore_Type]==42) | ~(data_plot['PXCU'].between(0, 15))&
                           (data_plot[st.session_state.Ore_Type]==42))
 
-                    OT42_Outliers=data_plot.loc[idx7].reset_index(drop=True)
-                    OT42_Outliers['FLAGD']=5
+                    OT42_Outliers=data_plot.loc[[idx7].reset_index(drop=True), 'FLAGD']=5
+                    
 
                     #ORTP 99 outliers
-                    ORTP_99=data_C[(data_C[st.session_state.Ore_Type] == 99) & (data_C['TCU'] >= 0)]
-                    ORTP_99['FLAGD']=5
+                    id_=(data_C[st.session_state.Ore_Type] == 99) & (data_C['TCU'] >= 0)
+                    ORTP_99=data_C.loc[id_, 'FLAGD']=5
 
                     #put all outliers into dataframe
                     dataframes = {'OT21_Outliers': OT21_Outliers, 'OT22_Outliers': OT22_Outliers, 'OT27_Outliers': OT27_Outliers, 
