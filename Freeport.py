@@ -158,64 +158,64 @@ if authentication_status:
             plt.legend(handles=[OT21_patch, OT22_patch, OT27_patch, OT31_patch, OT32_patch, OT33_patch, OT34_patch,
                                 OT37_patch, OT41_patch, OT42_patch, Overlap_patch])
 
-        else:
+elif x_col=='PQLT' and y_col=='PXCU':
             
-            colors = dict({10: '#6C3600', 21: '#005900', 22: '#00FF00', 27: '#FF8000', 31: '#00FFFF', 32: '#FF0000',
-                           33: '#00008B', 34:
-                               '#B22222', 37: '#A1A0FF', 41: '#FFB6C1', 42: '#6F00DD', 46: '#FEFE00', 50: '#CCFF66',
-                           51: '#4E00FF', 52:
-                               '#FFFFB7',
-                           53: '#808040', 54: '#008080', 55: '#FF69B4'})
+        colors = dict({10: '#6C3600', 21: '#005900', 22: '#00FF00', 27: '#FF8000', 31: '#00FFFF', 32: '#FF0000',
+                        33: '#00008B', 34:
+                            '#B22222', 37: '#A1A0FF', 41: '#FFB6C1', 42: '#6F00DD', 46: '#FEFE00', 50: '#CCFF66',
+                        51: '#4E00FF', 52:
+                            '#FFFFB7',
+                        53: '#808040', 54: '#008080', 55: '#FF69B4'})
             
             
-            fig, ax = plt.subplots(figsize=(10, 6))
-            major_ticks = np.arange(0, 100, 5)
+        fig, ax = plt.subplots(figsize=(10, 6))
+        major_ticks = np.arange(0, 100, 5)
 
-            sns.scatterplot(x=x_col, y=y_col, hue=Ore_Type,
-                            data=data_plot, palette=colors,
-                            legend='full', alpha=1.0, ax=ax)
+        sns.scatterplot(x=x_col, y=y_col, hue=Ore_Type,
+                        data=data_plot, palette=colors,
+                        legend='full', alpha=1.0, ax=ax)
 
-            ax.legend(loc='lower right')
-            ax.set_xlabel(x_col, fontweight='bold', size=14)
-            ax.set_ylabel(y_col, fontweight='bold', size=14)
-            ax.set_xlim(0, 100)
-            ax.set_ylim(0, 100)
-            ax.grid()
-            ax.set_title(plot_title, fontweight='bold', size=25)
-            ax.set_xticks(major_ticks)
-            ax.set_yticks(major_ticks)
+        ax.legend(loc='lower right')
+        ax.set_xlabel(x_col, fontweight='bold', size=14)
+        ax.set_ylabel(y_col, fontweight='bold', size=14)
+        ax.set_xlim(0, 100)
+        ax.set_ylim(0, 100)
+        ax.grid()
+        ax.set_title(plot_title, fontweight='bold', size=25)
+        ax.set_xticks(major_ticks)
+        ax.set_yticks(major_ticks)
 
     
-            # add first rectangle with patches
-            rectangles = [
-                (60, 50, 40, 50, "OT 22", "#00FF00", None, 'center'),  # Added hatch and va parameters
-                (50, 20, 50, 30, "OT 31", '#00FFFF', None, 'center'),
-                (57, 0, 42.5, 20, "OT 34", '#B22222', None, 'center'),
-                (30, 20, 30, 40, "OT 21", '#005900', None, 'center'),
-                (35, 0, 22, 20, "OT 32", '#FF0000', None, 'center'),
-                (15, 0, 20, 20, "OT 27/42", None, '/', 'bottom'),
-                (0, 20, 30, 10, "OT 27", '#FF8000', None, 'center'),
-                (50, 20, 10, 30, "OT 21/31", None, '/', 'center'),
-                (0, 0, 15, 15, "OT 27/41", None, "/", 'center'),
-                (0, 15, 20, 5, "", None, "/", 'center'),
-                (15, 0, 10, 20, "27/37", None, "/", 'center'),
-            ]
-            for rect_params in rectangles:
-                left, bottom, width, height, label, color, hatch, va = rect_params
-                rect = mpatches.Rectangle((left, bottom), width, height,
-                                          fill=True,
-                                          alpha=0.1,
-                                          linewidth=2,
-                                          edgecolor='black',
-                                          facecolor=color,
-                                          hatch=hatch if x_col == 'PXCU' else None,  # Set hatch parameter based on axes
-                                          )
-                ax.add_patch(rect)
-                ax.annotate(label,
-                            (0.5 * (left + left + width), 0.5 * (bottom + bottom + height)),
-                            color='black', weight='bold', fontsize=12,
-                            ha='center', va=va if x_col == 'PXCU' else 'center',  # Set va parameter based on axes
-                            bbox=dict(facecolor='white', alpha=0.5, edgecolor='white'))
+    # add first rectangle with patches
+        rectangles = [
+            (60, 50, 40, 50, "OT 22", "#00FF00", None, 'center'),  # Added hatch and va parameters
+            (50, 20, 50, 30, "OT 31", '#00FFFF', None, 'center'),
+            (57, 0, 42.5, 20, "OT 34", '#B22222', None, 'center'),
+            (30, 20, 30, 40, "OT 21", '#005900', None, 'center'),
+            (35, 0, 22, 20, "OT 32", '#FF0000', None, 'center'),
+            (15, 0, 20, 20, "OT 27/42", None, '/', 'bottom'),
+            (0, 20, 30, 10, "OT 27", '#FF8000', None, 'center'),
+            (50, 20, 10, 30, "OT 21/31", None, '/', 'center'),
+            (0, 0, 15, 15, "OT 27/41", None, "/", 'center'),
+            (0, 15, 20, 5, "", None, "/", 'center'),
+            (15, 0, 10, 20, "27/37", None, "/", 'center'),
+        ]
+        for rect_params in rectangles:
+            left, bottom, width, height, label, color, hatch, va = rect_params
+            rect = mpatches.Rectangle((left, bottom), width, height,
+                                        fill=True,
+                                        alpha=0.1,
+                                        linewidth=2,
+                                        edgecolor='black',
+                                        facecolor=color,
+                                        hatch=hatch if x_col == 'PXCU' else None,  # Set hatch parameter based on axes
+                                        )
+            ax.add_patch(rect)
+            ax.annotate(label,
+                        (0.5 * (left + left + width), 0.5 * (bottom + bottom + height)),
+                        color='black', weight='bold', fontsize=12,
+                        ha='center', va=va if x_col == 'PXCU' else 'center',  # Set va parameter based on axes
+                        bbox=dict(facecolor='white', alpha=0.5, edgecolor='white'))
 
             #Legends
             # Creating legend with color box
