@@ -78,6 +78,7 @@ if authentication_status:
     #@st.cache_data
    
     def PXCU_PQLT_PLOT(data_plot, x_col, y_col, Ore_Type, LITH, plot_title):
+        rectangles=[]
         if x_col=='PXCU' and y_col=='PQLT':
             cols_ = [Ore_Type, LITH]
             for col_ in cols_:
@@ -122,26 +123,7 @@ if authentication_status:
             (0, 0, 15, 15, "OT 27/41", None, "/", 'center'),
             (15, 0, 5, 25, "", None, "/", 'center'),
             (0, 15, 20, 10, "27/37", None, "/", 'center'),
-        ]
-
-        for rect_params in rectangles:
-            left, bottom, width, height, label, color, hatch, va = rect_params
-            rect = mpatches.Rectangle((left, bottom), width, height,
-                                      fill=True,
-                                      alpha=0.1,
-                                      linewidth=2,
-                                      edgecolor='black',
-                                      facecolor=color,
-                                      hatch=hatch if x_col == 'PXCU' else None,  # Set hatch parameter based on axes
-                                      )
-            ax.add_patch(rect)
-            ax.annotate(label,
-                        (0.5 * (left + left + width), 0.5 * (bottom + bottom + height)),
-                        color='black', weight='bold', fontsize=12,
-                        ha='center', va=va if x_col == 'PXCU' else 'center',  # Set va parameter based on axes
-                        bbox=dict(facecolor='white', alpha=0.5, edgecolor='white'))
-
-
+        
           # Legends
             OT22_patch = mpatches.Patch(color='#00FF00', label='22: Green Oxide')
             OT21_patch = mpatches.Patch(color='#005900', label='21: Black Oxide')
@@ -198,17 +180,17 @@ if authentication_status:
                 (0, 15, 20, 5, "", None, "/", 'center'),
                 (15, 0, 10, 20, "27/37", None, "/", 'center'),
                 ]
-        for rect_param in rectangle:
-            left, bottom, width, height, label, color, hatch, va = rect_param
-            rect1 = mpatches.Rectangle((left, bottom), width, height,
+        for rect_params in rectangles:
+            left, bottom, width, height, label, color, hatch, va = rect_params
+            rect = mpatches.Rectangle((left, bottom), width, height,
                                         fill=True,
                                         alpha=0.1,
                                         linewidth=2,
                                         edgecolor='black',
-                                        facecolor=color,
-                                        hatch=hatch if x_col == 'PXCU' else None,  # Set hatch parameter based on axes
+                                        facecolor=color if color else 'none',
+                                        hatch=hatch
                                         )
-            ax.add_patch(rect1)
+            ax.add_patch(rect)
             ax.annotate(label,
                         (0.5 * (left + left + width), 0.5 * (bottom + bottom + height)),
                         color='black', weight='bold', fontsize=12,
