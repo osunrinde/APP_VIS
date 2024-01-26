@@ -198,7 +198,7 @@ if authentication_status:
             ax.annotate(label,
                         (0.5 * (left + left + width), 0.5 * (bottom + bottom + height)),
                         color='black', weight='bold', fontsize=12,
-                        ha='center', va=va if x == 'PXCU' else 'center',  # Set va parameter based on axes
+                        ha='center', va=va if x_col == 'PXCU' else 'center',  # Set va parameter based on axes
                         bbox=dict(facecolor='white', alpha=0.5, edgecolor='white'))
 
             #st.write("Note: Interactive dashboard is displayed above.") 
