@@ -137,9 +137,25 @@ if authentication_status:
                 (15, 0, 5, 25, "", None, "/", 'center'),
             (    0, 15, 20, 10, "27/37", None, "/", 'center'),
             ]
-            
-            
-       
+        
+        for rect_params in rectangles:
+            left, bottom, width, height, label, color, hatch, va = rect_params
+            rect = mpatches.Rectangle((left, bottom), width, height,
+                                        fill=True,
+                                        alpha=0.1,
+                                        linewidth=2,
+                                        edgecolor='black',
+                                        facecolor=color if color else 'none',
+                                        hatch=hatch
+                                        )
+            ax.add_patch(rect)
+            ax.annotate(label,
+                        (0.5 * (left + left + width), 0.5 * (bottom + bottom + height)),
+                        color='black', weight='bold', fontsize=12,
+                        ha='center', va=va if x_col == 'PXCU' else 'center',  # Set va parameter based on axes
+                        bbox=dict(facecolor='white', alpha=0.5, edgecolor='white'))
+
+            #st.write("Note: Interactive dashboard is displayed above.")
             #plt.show()
     #function to download dataframe to excel
     def outliers_download(dataframes, filename):
