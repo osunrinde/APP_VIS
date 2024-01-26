@@ -177,7 +177,7 @@ if authentication_status:
                     (57, 0, 42.5, 20, "OT 34", '#B22222', None, 'center'),
                     (30, 20, 30, 40, "OT 21", '#005900', None, 'center'),
                     (35, 0, 22, 20, "OT 32", '#FF0000', None, 'center'),
-                    (15, 0, 20, 20, "OT 27/42", None, '/', 'center'),
+                    (15, 0, 20, 20, "OT 27/42", None, '/', 'bottom'),
                     (0, 20, 30, 10, "OT 27", '#FF8000', None, 'center'),
                     (50, 20, 10, 30, "OT 21/31", None, '/', 'center'),
                     (0, 0, 15, 15, "OT 27/41", None, "/", 'center'),
@@ -198,7 +198,7 @@ if authentication_status:
             ax.annotate(label,
                         (0.5 * (left + left + width), 0.5 * (bottom + bottom + height)),
                         color='black', weight='bold', fontsize=12,
-                        ha='center', va=va,  # Set va parameter based on axes
+                        ha='center', va=va if x == 'PXCU' else 'center',  # Set va parameter based on axes
                         bbox=dict(facecolor='white', alpha=0.5, edgecolor='white'))
 
             #st.write("Note: Interactive dashboard is displayed above.") 
