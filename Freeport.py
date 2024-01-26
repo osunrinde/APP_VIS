@@ -170,7 +170,7 @@ if authentication_status:
 
     
         # add first rectangle with patches
-            simple_rect = mpatches.Rectangle((60, 50), 40, 50, color='blue', alpha=0.2)
+            simple_rect = mpatches.Rectangle((60, 50), 40, 50, color=None, hatch='/',alpha=0.2)
             ax.add_patch(simple_rect)
             #rectangle = [
                     #(60, 50, 40, 50, "OT 22", "#00FF00", None, 'center'),  # Added hatch and va parameters
