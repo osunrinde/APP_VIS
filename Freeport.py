@@ -139,6 +139,10 @@ if authentication_status:
             ]
     
         else:
+            cols_1 = [Ore_Type, LITH]
+            for col_1 in cols_:
+                idx__ = data_plot[col_1].isin([-2147483648, -1,-2])
+                data_plot.loc[idx__, col_1] = np.nan
             colors = dict({10: '#6C3600', 21: '#005900', 22: '#00FF00', 27: '#FF8000', 31: '#00FFFF', 32: '#FF0000',
                     33: '#00008B', 34:
                         '#B22222', 37: '#A1A0FF', 41: '#FFB6C1', 42: '#6F00DD', 46: '#FEFE00', 50: '#CCFF66',
