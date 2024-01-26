@@ -137,7 +137,7 @@ if authentication_status:
                 (15, 0, 5, 25, "", None, "/", 'center'),
             (    0, 15, 20, 10, "27/37", None, "/", 'center'),
             ]
-         else:
+        else:
             print('it is okay')
         for rect_params in rectangles:
             left, bottom, width, height, label, color, hatch, va = rect_params
