@@ -158,7 +158,7 @@ if authentication_status:
                             legend='full', alpha=1.0, ax=ax)
 
             ax.legend(handles=[OT21_patch, OT22_patch, OT27_patch, OT31_patch, OT32_patch, OT33_patch, OT34_patch,
-                                OT37_patch, OT41_patch, OT42_patch, Overlap_patch],loc='lower right')
+                                OT37_patch, OT41_patch, OT42_patch, Overlap_patch],loc='upper left')
             ax.set_xlabel(x_col, fontweight='bold', size=14)
             ax.set_ylabel(y_col, fontweight='bold', size=14)
             ax.set_xlim(0, 100)
@@ -170,24 +170,19 @@ if authentication_status:
 
     
         # add first rectangle with patches
-            simple_rect = mpatches.Rectangle((60, 50), 40, 50, color="#00FF00",alpha=0.2)
-            ax.add_patch(simple_rect)
-            simple_rect2 = mpatches.Rectangle((50, 20), 50, 30, color='#00FFFF', hatch='/',alpha=0.2)
-            ax.add_patch(simple_rect2)
-            simple_rect3 = mpatches.Rectangle((57, 0), 42.5, 20, color='#B22222', hatch='/',alpha=0.2)
-            ax.add_patch(simple_rect3)
+        
             #rectangle = [
-                    #(60, 50, 40, 50, "OT 22", "#00FF00", None, 'center'),  # Added hatch and va parameters
-                    #(50, 20, 50, 30, "OT 31", '#00FFFF', None, 'center'),
-                    #(57, 0, 42.5, 20, "OT 34", '#B22222', None, 'center'),
-                    #(30, 20, 30, 40, "OT 21", '#005900', None, 'center'),
-                    #(35, 0, 22, 20, "OT 32", '#FF0000', None, 'center'),
-                    #(15, 0, 20, 20, "OT 27/42", None, '/', 'bottom'),
-                    #(0, 20, 30, 10, "OT 27", '#FF8000', None, 'center'),
-                    #(50, 20, 10, 30, "OT 21/31", None, '/', 'center'),
-                    #(0, 0, 15, 15, "OT 27/41", None, "/", 'center'),
-                    #(0, 15, 20, 5, "", None, "/", 'center'),
-                    #(15, 0, 10, 20, "27/37", None, "/", 'center'),
+                    (60, 50, 40, 50, "OT 22", "#00FF00", None, 'center'),  # Added hatch and va parameters
+                    (50, 20, 50, 30, "OT 31", '#00FFFF', None, 'center'),
+                    (57, 0, 42.5, 20, "OT 34", '#B22222', None, 'center'),
+                    (30, 20, 30, 40, "OT 21", '#005900', None, 'center'),
+                    (35, 0, 22, 20, "OT 32", '#FF0000', None, 'center'),
+                    (15, 0, 20, 20, "OT 27/42", None, '/', 'center'),
+                    (0, 20, 30, 10, "OT 27", '#FF8000', None, 'center'),
+                    (50, 20, 10, 30, "OT 21/31", None, '/', 'center'),
+                    (0, 0, 15, 15, "OT 27/41", None, "/", 'center'),
+                    (0, 15, 20, 5, "", None, "/", 'center'),
+                    (15, 0, 10, 20, "27/37", None, "/", 'center'),
                 #]
         for rect_params in rectangles:
             left, bottom, width, height, label, color, hatch, va = rect_params
@@ -203,7 +198,7 @@ if authentication_status:
             ax.annotate(label,
                         (0.5 * (left + left + width), 0.5 * (bottom + bottom + height)),
                         color='black', weight='bold', fontsize=12,
-                        ha='center', va=va if x_col == 'PXCU' else 'center',  # Set va parameter based on axes
+                        ha='center', va=va ,  # Set va parameter based on axes
                         bbox=dict(facecolor='white', alpha=0.5, edgecolor='white'))
 
             #st.write("Note: Interactive dashboard is displayed above.") 
