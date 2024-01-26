@@ -157,8 +157,7 @@ if authentication_status:
                             data=data_plot, palette=colors,
                             legend='full', alpha=1.0, ax=ax)
 
-            ax.legend(handles=[OT21_patch,OT22_patch, OT27_patch,OT31_patch,OT32_patch,OT33_patch, OT34_patch,
-                            OT37_patch,OT41_patch,OT42_patch, Overlap_patch],loc='lower right')
+            ax.legend()
             ax.set_xlabel(x_col, fontweight='bold', size=14)
             ax.set_ylabel(y_col, fontweight='bold', size=14)
             ax.set_xlim(0, 100)
