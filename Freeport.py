@@ -157,7 +157,8 @@ if authentication_status:
                             data=data_plot, palette=colors,
                             legend='full', alpha=1.0, ax=ax)
 
-            ax.legend()
+            ax.legend(handles=[OT21_patch, OT22_patch, OT27_patch, OT31_patch, OT32_patch, OT33_patch, OT34_patch,
+                                OT37_patch, OT41_patch, OT42_patch, Overlap_patch],loc='lower right')
             ax.set_xlabel(x_col, fontweight='bold', size=14)
             ax.set_ylabel(y_col, fontweight='bold', size=14)
             ax.set_xlim(0, 100)
@@ -169,19 +170,19 @@ if authentication_status:
 
     
         # add first rectangle with patches
-            rectangle = [
-                    (60, 50, 40, 50, "OT 22", "#00FF00", None, 'center'),  # Added hatch and va parameters
-                    (50, 20, 50, 30, "OT 31", '#00FFFF', None, 'center'),
-                    (57, 0, 42.5, 20, "OT 34", '#B22222', None, 'center'),
-                    (30, 20, 30, 40, "OT 21", '#005900', None, 'center'),
-                    (35, 0, 22, 20, "OT 32", '#FF0000', None, 'center'),
-                    (15, 0, 20, 20, "OT 27/42", None, '/', 'bottom'),
-                    (0, 20, 30, 10, "OT 27", '#FF8000', None, 'center'),
-                    (50, 20, 10, 30, "OT 21/31", None, '/', 'center'),
-                    (0, 0, 15, 15, "OT 27/41", None, "/", 'center'),
-                    (0, 15, 20, 5, "", None, "/", 'center'),
-                    (15, 0, 10, 20, "27/37", None, "/", 'center'),
-                ]
+            #rectangle = [
+                    #(60, 50, 40, 50, "OT 22", "#00FF00", None, 'center'),  # Added hatch and va parameters
+                    #(50, 20, 50, 30, "OT 31", '#00FFFF', None, 'center'),
+                    #(57, 0, 42.5, 20, "OT 34", '#B22222', None, 'center'),
+                    #(30, 20, 30, 40, "OT 21", '#005900', None, 'center'),
+                    #(35, 0, 22, 20, "OT 32", '#FF0000', None, 'center'),
+                    #(15, 0, 20, 20, "OT 27/42", None, '/', 'bottom'),
+                    #(0, 20, 30, 10, "OT 27", '#FF8000', None, 'center'),
+                    #(50, 20, 10, 30, "OT 21/31", None, '/', 'center'),
+                    #(0, 0, 15, 15, "OT 27/41", None, "/", 'center'),
+                    #(0, 15, 20, 5, "", None, "/", 'center'),
+                    #(15, 0, 10, 20, "27/37", None, "/", 'center'),
+                #]
         for rect_params in rectangles:
             left, bottom, width, height, label, color, hatch, va = rect_params
             rect = mpatches.Rectangle((left, bottom), width, height,
