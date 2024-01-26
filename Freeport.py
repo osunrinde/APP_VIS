@@ -183,7 +183,7 @@ if authentication_status:
                     (0, 0, 15, 15, "OT 27/41", None, "/", 'center'),
                     (0, 15, 20, 5, "", None, "/", 'center'),
                     (15, 0, 10, 20, "27/37", None, "/", 'center'),
-                #]
+                ]
         for rect_params in rectangles:
             left, bottom, width, height, label, color, hatch, va = rect_params
             rect = mpatches.Rectangle((left, bottom), width, height,
