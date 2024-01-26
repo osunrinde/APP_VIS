@@ -79,6 +79,18 @@ if authentication_status:
    
     def PXCU_PQLT_PLOT(data_plot, x_col, y_col, Ore_Type, LITH, plot_title):
         rectangles=[]
+         #Legends
+        OT22_patch = mpatches.Patch(color='#00FF00', label='22: Green Oxide')
+        OT21_patch = mpatches.Patch(color='#005900', label='21: Black Oxide')
+        OT27_patch = mpatches.Patch(color='#FF8000', label='27: Insoluble oxide')
+        OT32_patch = mpatches.Patch(color='#FF0000', label='32: Secondary Chalcocite')
+        OT34_patch = mpatches.Patch(color='#B22222', label='34: Mixed Native CU')
+        OT31_patch= mpatches.Patch(color='#00FFFF', label='31:Mixed Oxide-Chalcocite')
+        OT33_patch= mpatches.Patch(color='#00008B', label='33:Mixed Chalcocite-Sulphide')
+        OT37_patch= mpatches.Patch(color='#A1A0FF', label='37:Mixed Chalcopyrite')
+        OT41_patch= mpatches.Patch(color='#FFB6C1', label='41:Chalcopyrite')
+        OT42_patch= mpatches.Patch(color='#6F00DD', label='42:Bornite')
+        Overlap_patch= mpatches.Patch(hatch='/', label='Overlapping Zones',fill=False)
         if x_col=='PXCU' and y_col=='PQLT':
             cols_ = [Ore_Type, LITH]
             for col_ in cols_:
@@ -123,22 +135,9 @@ if authentication_status:
             (0, 0, 15, 15, "OT 27/41", None, "/", 'center'),
             (15, 0, 5, 25, "", None, "/", 'center'),
             (0, 15, 20, 10, "27/37", None, "/", 'center'),
-        
-          # Legends
-            OT22_patch = mpatches.Patch(color='#00FF00', label='22: Green Oxide')
-            OT21_patch = mpatches.Patch(color='#005900', label='21: Black Oxide')
-            OT27_patch = mpatches.Patch(color='#FF8000', label='27: Insoluble oxide')
-            OT32_patch = mpatches.Patch(color='#FF0000', label='32: Secondary Chalcocite')
-            OT34_patch = mpatches.Patch(color='#B22222', label='34: Mixed Native CU')
-            OT31_patch= mpatches.Patch(color='#00FFFF', label='31:Mixed Oxide-Chalcocite')
-            OT33_patch= mpatches.Patch(color='#00008B', label='33:Mixed Chalcocite-Sulphide')
-            OT37_patch= mpatches.Patch(color='#A1A0FF', label='37:Mixed Chalcopyrite')
-            OT41_patch= mpatches.Patch(color='#FFB6C1', label='41:Chalcopyrite')
-            OT42_patch= mpatches.Patch(color='#6F00DD', label='42:Bornite')
-            Overlap_patch= mpatches.Patch(hatch='/', label='Overlapping Zones',fill=False)
 
-            plt.legend(handles=[OT21_patch, OT22_patch, OT27_patch, OT31_patch, OT32_patch, OT33_patch, OT34_patch,
-                                OT37_patch, OT41_patch, OT42_patch, Overlap_patch])     
+            ax.legend(handles=[OT21_patch, OT22_patch, OT27_patch, OT31_patch, OT32_patch, OT33_patch, OT34_patch,
+                                OT37_patch, OT41_patch, OT42_patch, Overlap_patch],loc='lower right')     
         else:
             colors = dict({10: '#6C3600', 21: '#005900', 22: '#00FF00', 27: '#FF8000', 31: '#00FFFF', 32: '#FF0000',
                     33: '#00008B', 34:
@@ -197,23 +196,8 @@ if authentication_status:
                         ha='center', va=va if x_col == 'PXCU' else 'center',  # Set va parameter based on axes
                         bbox=dict(facecolor='white', alpha=0.5, edgecolor='white'))
 
-            #Legends
-            # Creating legend with color box
-            OT22_patch= mpatches.Patch(color='#00FF00', label='22:Green Oxide')
-            OT21_patch= mpatches.Patch(color='#005900', label='21:Black Oxide')
-            OT27_patch= mpatches.Patch(color='#FF8000', label='27:Insoluble oxide')
-            OT32_patch= mpatches.Patch(color='#FF0000', label='32:Secondary Chalcocite')
-            OT34_patch= mpatches.Patch(color='#B22222', label='34:Mixed Native CU')
-            OT31_patch= mpatches.Patch(color='#00FFFF', label='31:Mixed Oxide-Chalcocite')
-            OT33_patch= mpatches.Patch(color='#00008B', label='33:Mixed Chalcocite-Sulphide')
-            OT37_patch= mpatches.Patch(color='#A1A0FF', label='37:Mixed Chalcopyrite')
-            OT41_patch= mpatches.Patch(color='#FFB6C1', label='41:Chalcopyrite')
-            OT42_patch= mpatches.Patch(color='#6F00DD', label='42:Bornite')
-            Overlap_patch= mpatches.Patch(hatch='/', label='Overlapping Zones',fill=False)
-
-
-            plt.legend(handles=[OT21_patch,OT22_patch, OT27_patch,OT31_patch,OT32_patch,OT33_patch, OT34_patch,
-                            OT37_patch,OT41_patch,OT42_patch, Overlap_patch])
+            ax.legend(handles=[OT21_patch,OT22_patch, OT27_patch,OT31_patch,OT32_patch,OT33_patch, OT34_patch,
+                            OT37_patch,OT41_patch,OT42_patch, Overlap_patch],loc='lower right')
             #st.write("Note: Interactive dashboard is displayed above.")
             
             
