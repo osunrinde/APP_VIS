@@ -187,7 +187,7 @@ if authentication_status:
 
     
         # add first rectangle with patches
-            rectangles = [
+            rectangle = [
                 (60, 50, 40, 50, "OT 22", "#00FF00", None, 'center'),  # Added hatch and va parameters
                 (50, 20, 50, 30, "OT 31", '#00FFFF', None, 'center'),
                 (57, 0, 42.5, 20, "OT 34", '#B22222', None, 'center'),
@@ -200,9 +200,9 @@ if authentication_status:
                 (0, 15, 20, 5, "", None, "/", 'center'),
                 (15, 0, 10, 20, "27/37", None, "/", 'center'),
                 ]
-        for rect_params in rectangles:
-            left, bottom, width, height, label, color, hatch, va = rect_params
-            rect = mpatches.Rectangle((left, bottom), width, height,
+        for rect_param in rectangle:
+            left, bottom, width, height, label, color, hatch, va = rect_param
+            rect1 = mpatches.Rectangle((left, bottom), width, height,
                                         fill=True,
                                         alpha=0.1,
                                         linewidth=2,
@@ -210,7 +210,7 @@ if authentication_status:
                                         facecolor=color,
                                         hatch=hatch if x_col == 'PXCU' else None,  # Set hatch parameter based on axes
                                         )
-            ax.add_patch(rect)
+            ax.add_patch(rect1)
             ax.annotate(label,
                         (0.5 * (left + left + width), 0.5 * (bottom + bottom + height)),
                         color='black', weight='bold', fontsize=12,
