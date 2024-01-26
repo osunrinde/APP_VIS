@@ -173,7 +173,7 @@ if authentication_status:
             simple_rect = mpatches.Rectangle((60, 50), 40, 50, color="#00FF00",alpha=0.2)
             ax.add_patch(simple_rect)
             simple_rect2 = mpatches.Rectangle((50, 20), 50, 30, color='#00FFFF', hatch='/',alpha=0.2)
-            ax.add_patch(simple_rect3)
+            ax.add_patch(simple_rect2)
             simple_rect3 = mpatches.Rectangle((57, 0), 42.5, 20, color='#B22222', hatch='/',alpha=0.2)
             ax.add_patch(simple_rect3)
             #rectangle = [
