@@ -137,7 +137,8 @@ if authentication_status:
                 (15, 0, 5, 25, "", None, "/", 'center'),
             (    0, 15, 20, 10, "27/37", None, "/", 'center'),
             ]
-        
+         else:
+            print('it is okay')
         for rect_params in rectangles:
             left, bottom, width, height, label, color, hatch, va = rect_params
             rect = mpatches.Rectangle((left, bottom), width, height,
@@ -155,7 +156,8 @@ if authentication_status:
                         ha='center', va=va if x_col == 'PXCU' else 'center',  # Set va parameter based on axes
                         bbox=dict(facecolor='white', alpha=0.5, edgecolor='white'))
 
-            #st.write("Note: Interactive dashboard is displayed above.")
+            #st.write("Note: Interactive dashboard is displayed above.") 
+    
             #plt.show()
     #function to download dataframe to excel
     def outliers_download(dataframes, filename):
