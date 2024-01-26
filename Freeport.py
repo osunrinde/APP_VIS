@@ -171,7 +171,7 @@ if authentication_status:
     
         # add first rectangle with patches
         
-            rectangle = [
+            rectangles = [
                     (60, 50, 40, 50, "OT 22", "#00FF00", None, 'center'),  # Added hatch and va parameters
                     (50, 20, 50, 30, "OT 31", '#00FFFF', None, 'center'),
                     (57, 0, 42.5, 20, "OT 34", '#B22222', None, 'center'),
