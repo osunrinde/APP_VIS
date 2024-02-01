@@ -6,10 +6,10 @@ nest-asyncio
 notebook
 numpy
 packaging
-pip
+pip==23.3.2
 pandas
 Pillow
-request
+request==2.31.0
 smmap
 streamlit
 XlsxWriter
