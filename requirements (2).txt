@@ -9,7 +9,6 @@ packaging
 pip==23.3.2
 pandas
 Pillow
-requests==2.31.0
 smmap
 streamlit
 xlsxwriter
