@@ -1,0 +1,29 @@
+cookie:
+  expiry_days: 30
+  key: some_signature_key
+  name: some_cookie_name
+credentials:
+  usernames:
+    jsmith:
+      email: jsmith@gmail.com
+      logged_in: false
+      name: John Smith
+      password: $2b$12$6WyKnkB6wUKKltLq1iIWGOpKqKF5n70HxOjgQDzzIIzoEJGq4VPde
+    rbriggs:
+      email: rbriggs@gmail.com
+      logged_in: false
+      name: Rebecca Briggs
+      password: $2b$12$Vu0YvSU.5Yjvyu6go/9fj.N2WVVN/ObFp0kPyRlQV3LMiTzMRXZYW
+    taiwo:
+      email: tosunrin@fmi.com
+      logged_in: true
+      name: Taiwo Osunrinde
+      password: $2b$12$j3PXBsDsLERmQR5eGDla2OSYZe/ioniOMXzWNh8v3SSFBTcfX42bm
+    taye:
+      email: osunrinde24@gmail.com
+      logged_in: true
+      name: Taiwo Oludele Osunrinde
+      password: $2b$12$z4YBVw6.rt31J.GGoBM.MOZ.jMldck9Auv01xRxdP/HjufAVlj1le
+preauthorized:
+  emails:
+  - melsby@gmail.com
