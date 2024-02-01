@@ -29,7 +29,7 @@ from datetime import datetime
 ###########################
 
 st.set_page_config(
-    page_title="Ore Type Visalization Dashboard",
+    page_title="Ore Type Visualization Dashboard",
     page_icon="./Extras/favicon-32x32.png",
     layout="wide", initial_sidebar_state='expanded'
 )
@@ -67,32 +67,32 @@ authenticator = stauth.Authenticate(names, usernames, hashed_passwords, "ore typ
 
 name, authentication_status, username = authenticator.login("Login", "main")
 
-if authentication_status == False:
+if authentication_status is False:
     st.error("Username/password is incorrect")
 
-if authentication_status == None:
+if authentication_status is None:
     st.warning("Please enter your username and password")
 
 if authentication_status:
     #plot function
     #@st.cache_data
    
-    def PXCU_PQLT_PLOT(data_plot, x_col, y_col, Ore_Type, LITH, plot_title):
-        rectangles=[]
+    def pxcu_pqlt_plot(data_plot, x_col, y_col, ore_type, lith, plot_title):
+        #rectangles=[]
          #Legends
-        OT22_patch = mpatches.Patch(color='#00FF00', label='22: Green Oxide')
-        OT21_patch = mpatches.Patch(color='#005900', label='21: Black Oxide')
-        OT27_patch = mpatches.Patch(color='#FF8000', label='27: Insoluble oxide')
-        OT32_patch = mpatches.Patch(color='#FF0000', label='32: Secondary Chalcocite')
-        OT34_patch = mpatches.Patch(color='#B22222', label='34: Mixed Native CU')
-        OT31_patch= mpatches.Patch(color='#00FFFF', label='31:Mixed Oxide-Chalcocite')
-        OT33_patch= mpatches.Patch(color='#00008B', label='33:Mixed Chalcocite-Sulphide')
-        OT37_patch= mpatches.Patch(color='#A1A0FF', label='37:Mixed Chalcopyrite')
-        OT41_patch= mpatches.Patch(color='#FFB6C1', label='41:Chalcopyrite')
-        OT42_patch= mpatches.Patch(color='#6F00DD', label='42:Bornite')
-        Overlap_patch= mpatches.Patch(hatch='/', label='Overlapping Zones',fill=False)
+        ot22_patch = mpatches.Patch(color='#00FF00', label='22: Green Oxide')
+        ot21_patch = mpatches.Patch(color='#005900', label='21: Black Oxide')
+        ot27_patch = mpatches.Patch(color='#FF8000', label='27: Insoluble oxide')
+        ot32_patch = mpatches.Patch(color='#FF0000', label='32: Secondary Chalcocite')
+        ot34_patch = mpatches.Patch(color='#B22222', label='34: Mixed Native CU')
+        ot31_patch= mpatches.Patch(color='#00FFFF', label='31:Mixed Oxide-Chalcocite')
+        ot33_patch= mpatches.Patch(color='#00008B', label='33:Mixed Chalcocite-Sulphide')
+        ot37_patch= mpatches.Patch(color='#A1A0FF', label='37:Mixed Chalcopyrite')
+        ot41_patch= mpatches.Patch(color='#FFB6C1', label='41:Chalcopyrite')
+        ot42_patch= mpatches.Patch(color='#6F00DD', label='42:Bornite')
+        overlap_patch= mpatches.Patch(hatch='/', label='Overlapping Zones',fill=False)
         if x_col=='PXCU' and y_col=='PQLT':
-            cols_ = [Ore_Type, LITH]
+            cols_ = [ore_type, lith]
             for col_ in cols_:
                 idx3 = data_plot[col_].isin([-2147483648, -1,-2])
                 data_plot.loc[idx3, col_] = np.nan
@@ -109,11 +109,11 @@ if authentication_status:
             fig, ax = plt.subplots(figsize=(10, 6))
             major_ticks = np.arange(0, 100, 5)
 
-            sns.scatterplot(x=x_col, y=y_col, hue=Ore_Type,
+            sns.scatterplot(x=x_col, y=y_col, hue=ore_type,
                             data=data_plot, palette=colors,
                             legend='full', alpha=1.0)
-            ax.legend(handles=[OT21_patch, OT22_patch, OT27_patch, OT31_patch, OT32_patch, OT33_patch, OT34_patch,
-                                OT37_patch, OT41_patch, OT42_patch, Overlap_patch],loc='lower right')
+            ax.legend(handles=[ot21_patch, ot22_patch, ot27_patch, ot31_patch, ot32_patch, ot33_patch, ot34_patch,
+                                ot37_patch, ot41_patch, ot42_patch, overlap_patch],loc='lower right')
             ax.set_xlabel(x_col, fontweight='bold', size=14)
             ax.set_ylabel(y_col, fontweight='bold', size=14)
             ax.set_xlim(0, 100)
@@ -138,7 +138,7 @@ if authentication_status:
             (    0, 15, 20, 10, "27/37", None, "/", 'center'),
             ]
         else:
-            cols_1 = [Ore_Type, LITH]
+            cols_1 = [ore_type, lith]
             for col_ in cols_1:
                 idx__ = data_plot[col_].isin([-2147483648, -1,-2])
                 data_plot.loc[idx__, col_] = np.nan
@@ -157,8 +157,8 @@ if authentication_status:
                             data=data_plot, palette=colors,
                             legend='full', alpha=1.0, ax=ax)
 
-            ax.legend(handles=[OT21_patch, OT22_patch, OT27_patch, OT31_patch, OT32_patch, OT33_patch, OT34_patch,
-                                OT37_patch, OT41_patch, OT42_patch, Overlap_patch],loc='upper left')
+            ax.legend(handles=[ot21_patch, ot22_patch, ot27_patch, ot31_patch, ot32_patch, ot33_patch, ot34_patch,
+                                ot37_patch, ot41_patch, ot42_patch, overlap_patch],loc='upper left')
             ax.set_xlabel(x_col, fontweight='bold', size=14)
             ax.set_ylabel(y_col, fontweight='bold', size=14)
             ax.set_xlim(0, 100)
@@ -271,135 +271,135 @@ if authentication_status:
                 st.sidebar.write("change the default TCU-Cutoff value if needed")
                 
                 if 'session_state' not in st.session_state:
-                    st.session_state.session_state = {
-                    'x_col': None,
-                    'y_col': None,
-                    'Ore_Type': None,
-                    'LITH':None,
-                    }
+                    st.session_state.session_state = dict(x_col=None, y_col=None, ore_type=None, lith=None)
                 columns = data_.columns.tolist()
+
                 #create plot settings
                 st.sidebar.header("Plot Settings")
                 plot_title = st.sidebar.text_input("Enter Plot Title")
                 st.session_state.x_col= st.sidebar.selectbox("Select X Column",columns)
                 st.session_state.y_col= st.sidebar.selectbox("Select Y Column",columns)
-                st.session_state.Ore_Type=st.sidebar.selectbox("Select Ore_type Column", columns, index=0)
-                st.session_state.LITH=st.sidebar.selectbox("Select Lithology Column", columns, index=0)
-                #data check 
+                st.session_state.ore_type =st.sidebar.selectbox("Select Ore_type Column", columns, index=0)
+                st.session_state.lith=st.sidebar.selectbox("Select Lithology Column", columns, index=0)
+
+
+                #data check
                 #drop rows with ortp==99 and not having grades in it. This is because they are not needed for plotting or modelling
-                data_C=data_[~((data_[st.session_state.Ore_Type] == 99) & (data_['TCU'].isin([-1,-2])))]
+                data_c=data_[~((data_[st.session_state.ore_type] == 99) & (data_['TCU'].isin([-1,-2])))]
 
                 #check if assay data has ore type 99 and has grade present in it. This is to help geologists know what holes to fix in the database
 
-                if (data_C[st.session_state.Ore_Type]==99).any() and (data_C['TCU'] >=0).any():
-                    data_N=data_C[(data_C[st.session_state.Ore_Type] == 99) & (data_C['TCU'] >= 0)]
+                if (data_c[st.session_state.Ore_Type]==99).any() and (data_c['TCU'] >=0).any():
+                    data_n=data_c[(data_c[st.session_state.ore_type] == 99) & (data_c['TCU'] >= 0)]
                     st.subheader("ORTP 99 Assay Data:")
-                    st.dataframe(data_N)
-                    st.warning('please check assay data and correct as needed. This data will automatically be filtered out and would not be considered in the plot')
+                    st.dataframe(data_n)
+                    st.warning('please check assay data and correct as needed. This data will automatically be '
+                               'filtered out and would not be considered in the plot')
                 # Apply filtering logic
                 if is_list_empty(filter_list):
-                    data = data_C[~((data_C[st.session_state.Ore_Type] == 99) & (data_C['TCU'] >= 0))]
+                    data = data_c[~((data_c[st.session_state.ore_type] == 99) & (data_c['TCU'] >= 0))]
                     data_plot=data.loc[data['TCU']>=0.1]
-                    data_plot = data_plot[~data_plot[st.session_state.Ore_Type].isin([10,50,51,52,53,54])]
+                    data_plot = data_plot[~data_plot[st.session_state.ore_type].isin([10,50,51,52,53,54])]
                     st.subheader("Filtered Assay Data:")
                     st.dataframe(data_plot)
                 else:
-                    data = data_C[~((data_C[st.session_state.Ore_Type] == 99) & (data_C['TCU'] >= 0))]
+                    data = data_c[~((data_c[st.session_state.ore_type] == 99) & (data_c['TCU'] >= 0))]
                     data = data.loc[data[column_to_filter].str.startswith(tuple(filter_list))]
                     data_plot=data.loc[data['TCU']>=0.1]
-                    data_plot = data_plot[~data_plot[st.session_state.Ore_Type].isin([10,50,51,52,53,54])]
+                    data_plot = data_plot[~data_plot[st.session_state.ore_type].isin([10,50,51,52,53,54])]
                     st.subheader("Filtered Assay Data:")
                     st.dataframe(data_plot)
                     
 
             
-                if (st.session_state.x_col and st.session_state.y_col and st.session_state.Ore_Type)== "":
+                if (st.session_state.x_col and st.session_state.y_col and st.session_state.ore_type)== "":
                     pass
                 else:
 
                     if filtering !=0.1:
-                        #default filtring option
+                        #default filtering option
                         data_plot=data.loc[data['TCU']>=filtering]
-                        data_plot = data_plot[~data_plot[st.session_state.Ore_Type].isin([10,50,51,52,53,54])]
+                        data_plot = data_plot[~data_plot[st.session_state.ore_type].isin([10,50,51,52,53,54])]
                      
-                    if st.session_state.x_col and st.session_state.y_col and st.session_state.Ore_Type and plot_title != None:
+                    if st.session_state.x_col and st.session_state.y_col and st.session_state.ore_type and \
+                            plot_title is not None:
                         st.write('proceed to plot graph')
                     else:
                         st.warning('select all necessary variable')
                     #creating outliers dataframe        
                     #Find OT21  Outliers
-                    idx=(~(data_plot['PQLT'].between(30, 60))&(data_plot[st.session_state.Ore_Type]==21) | ~(data_plot['PXCU'].between(20, 60))&
-                         (data_plot[st.session_state.Ore_Type]==21))
+                    idx=(~(data_plot['PQLT'].between(30, 60))&(data_plot[st.session_state.ore_type]==21) | 
+                         ~(data_plot['PXCU'].between(20, 60))& (data_plot[st.session_state.Ore_Type]==21))
                     data_plot.loc[idx, 'FLAGD'] = 5
-                    OT21_Outliers = data_plot.loc[idx].reset_index(drop=True)
+                    ot21_outliers = data_plot.loc[idx].reset_index(drop=True)
 
                     #Find OT22  Outliers
-                    idx1=(~(data['PQLT'].between(60, 100))&(data[st.session_state.Ore_Type]==22) | ~(data['PXCU'].between(50, 100))&
-                          (data[st.session_state.Ore_Type]==22))
+                    idx1=(~(data['PQLT'].between(60, 100))&(data[st.session_state.ore_type]==22) |
+                          ~(data['PXCU'].between(50, 100))& (data[st.session_state.ore_type]==22))
                     data_plot.loc[idx1, 'FLAGD'] = 5
-                    OT22_Outliers = data_plot.loc[idx1].reset_index(drop=True)
+                    ot22_outliers = data_plot.loc[idx1].reset_index(drop=True)
                     #Find OT27  Outliers
-                    idx2=(~(data_plot['PQLT'].between(0, 35))&(data_plot[st.session_state.Ore_Type]==27) | ~(data_plot['PXCU'].between(0, 35))&
-                          (data_plot[st.session_state.Ore_Type]==27))
+                    idx2=(~(data_plot['PQLT'].between(0, 35))&(data_plot[st.session_state.ore_type]==27) | 
+                          ~(data_plot['PXCU'].between(0, 35))& (data_plot[st.session_state.ore_type]==27))
                     
                     data_plot.loc[idx2, 'FLAGD'] = 5
-                    OT27_Outliers = data_plot.loc[idx2].reset_index(drop=True)
+                    ot27_outliers = data_plot.loc[idx2].reset_index(drop=True)
                 
 
                     #Find OT31  Outliers
-                    idx3=(~(data_plot['PQLT'].between(50, 100))&(data_plot[st.session_state.Ore_Type]==31) | ~(data_plot['PXCU'].between(20, 50))&
-                          (data_plot[st.session_state.Ore_Type]==31))
+                    idx3=(~(data_plot['PQLT'].between(50, 100))&(data_plot[st.session_state.ore_type]==31) | 
+                          ~(data_plot['PXCU'].between(20, 50))& (data_plot[st.session_state.ore_type]==31))
 
                     data_plot.loc[idx3, 'FLAGD'] = 5
-                    OT31_Outliers = data_plot.loc[idx3].reset_index(drop=True)
+                    ot31_outliers = data_plot.loc[idx3].reset_index(drop=True)
                 
                     #Find OT32  Outliers
-                    idx8=(~(data_plot['PQLT'].between(35, 57))&(data_plot[st.session_state.Ore_Type]==32) | ~(data_plot['PXCU'].between(0, 20))&
-                          (data_plot[st.session_state.Ore_Type]==32))
+                    idx8=(~(data_plot['PQLT'].between(35, 57))&(data_plot[st.session_state.ore_type]==32) |
+                          ~(data_plot['PXCU'].between(0, 20))& (data_plot[st.session_state.ore_type]==32))
                     data_plot.loc[idx8, 'FLAGD'] = 5
-                    OT32_Outliers = data_plot.loc[idx8].reset_index(drop=True)
+                    ot32_outliers = data_plot.loc[idx8].reset_index(drop=True)
                 
                     #Find OT34  Outliers
-                    idx4=(~(data_plot['PQLT'].between(57, 100))&(data_plot[st.session_state.Ore_Type]==34) | ~(data_plot['PXCU'].between(0, 20))&
-                          (data_plot[st.session_state.Ore_Type]==34))
+                    idx4=(~(data_plot['PQLT'].between(57, 100))&(data_plot[st.session_state.ore_type]==34) | 
+                          ~(data_plot['PXCU'].between(0, 20))& (data_plot[st.session_state.ore_type]==34))
 
                     data_plot.loc[idx4, 'FLAGD'] = 5
-                    OT34_Outliers = data_plot.loc[idx4].reset_index(drop=True)
+                    ot34_outliers = data_plot.loc[idx4].reset_index(drop=True)
 
                     #Find OT37  Outliers
-                    idx5=(~(data_plot['PQLT'].between(15, 25))&(data_plot[st.session_state.Ore_Type]==37) | ~(data_plot['PXCU'].between(0, 20))&
-                          (data_plot[st.session_state.Ore_Type]==37))
+                    idx5=(~(data_plot['PQLT'].between(15, 25))&(data_plot[st.session_state.ore_type]==37) |
+                          ~(data_plot['PXCU'].between(0, 20))& (data_plot[st.session_state.ore_type]==37))
 
                     data_plot.loc[idx5, 'FLAGD'] = 5
-                    OT37_Outliers = data_plot.loc[idx5].reset_index(drop=True)
+                    ot37_outliers = data_plot.loc[idx5].reset_index(drop=True)
     
 
                     #Find OT41  Outliers
-                    idx6=(~(data_plot['PQLT'].between(0, 15))&(data_plot[st.session_state.Ore_Type]==41) | ~(data_plot['PXCU'].between(0, 15))&
-                          (data_plot[st.session_state.Ore_Type]==41))
+                    idx6=(~(data_plot['PQLT'].between(0, 15))&(data_plot[st.session_state.ore_type]==41) |
+                          ~(data_plot['PXCU'].between(0, 15))& (data_plot[st.session_state.ore_type]==41))
 
                     data_plot.loc[idx6, 'FLAGD'] = 5
-                    OT41_Outliers = data_plot.loc[idx6].reset_index(drop=True)
+                    ot41_outliers = data_plot.loc[idx6].reset_index(drop=True)
             
 
                     #Find OT42  Outliers
-                    idx7=(~(data_plot['PQLT'].between(15, 35))&(data_plot[st.session_state.Ore_Type]==42) | ~(data_plot['PXCU'].between(0, 15))&
-                          (data_plot[st.session_state.Ore_Type]==42))
+                    idx7=(~(data_plot['PQLT'].between(15, 35))&(data_plot[st.session_state.ore_type]==42) |
+                          ~(data_plot['PXCU'].between(0, 15))& (data_plot[st.session_state.ore_type]==42))
 
                     data_plot.loc[idx7, 'FLAGD'] = 5
-                    OT42_Outliers = data_plot.loc[idx7].reset_index(drop=True)
+                    ot42_outliers = data_plot.loc[idx7].reset_index(drop=True)
                     
 
                     #ORTP 99 outliers
-                    id_=(data_C[st.session_state.Ore_Type] == 99) & (data_C['TCU'] >= 0)
+                    id_=(data_c[st.session_state.ore_type] == 99) & (data_c['TCU'] >= 0)
                     data_plot.loc[id_, 'FLAGD'] = 5
-                    ORTP_99= data_plot.loc[id_].reset_index(drop=True)
+                    ortp_99= data_plot.loc[id_].reset_index(drop=True)
 
                     #put all outliers into dataframe
-                    dataframes = {'OT21_Outliers': OT21_Outliers, 'OT22_Outliers': OT22_Outliers, 'OT27_Outliers': OT27_Outliers, 
-                                  'OT31_Outliers': OT31_Outliers, 'OT32_Outliers': OT32_Outliers,
-                                  'OT34_Outliers': OT34_Outliers, 'OT37_Outliers': OT37_Outliers, 'OT41_Outliers': OT41_Outliers, 
-                                  'OT42_Outliers': OT42_Outliers,'ORTP_99_Outliers':ORTP_99}
+                    dataframes = {'OT21_Outliers': ot21_outliers, 'OT22_Outliers': ot22_outliers, 'OT27_Outliers': ot27_outliers, 
+                                  'OT31_Outliers': ot31_outliers, 'OT32_Outliers': ot32_outliers,
+                                  'OT34_Outliers': ot34_outliers, 'OT37_Outliers': ot37_outliers, 'OT41_Outliers': ot41_outliers, 
+                                  'OT42_Outliers': ot42_outliers,'ORTP_99_Outliers':ortp_99}
 
 
                     #creating columns for the plot and download buttons
@@ -410,7 +410,8 @@ if authentication_status:
             with plot_button:
                 if st.button("Plot"):
                     with st.spinner("Generating plot..."):
-                        st.session_state.plot=PXCU_PQLT_PLOT(data_plot, st.session_state.x_col, st.session_state.y_col, st.session_state.Ore_Type, st.session_state.LITH, plot_title)
+                        PXCU_PQLT_PLOT(data_plot, st.session_state.x_col, st.session_state.y_col,
+                                       st.session_state.ore_type, st.session_state.lith, plot_title)
                         st.pyplot(st.session_state.plot)
                         st.set_option('deprecation.showPyplotGlobalUse', False)
                         st.write("Note: Interactive dashboard is displayed above.")
@@ -430,8 +431,9 @@ if authentication_status:
                         download_time=datetime.now().strftime("%m%d%y_%H_%M_%S")
                         download_filename = f"Outliers_{download_time}.xlsx"
                         outliers_download(dataframes, download_filename)
-                        with open(download_filename, "rb") as file:
-                            st.download_button(label="download", data=file.read(), file_name=download_filename, key="download_button", on_click=click_button)
+                        with open(download_filename, "rb") as files:
+                            st.download_button(label="download", data=files.read(), file_name=download_filename,
+                                               key="download_button", on_click=click_button)
                             if st.session_state.clicked:
                                 st.success("Outliers successfully downloaded to your PC")
                             st.write(f'there are {idx.sum():,} OT21 Outliers  of the {len(idx):,} holes')
