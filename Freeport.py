@@ -288,20 +288,6 @@ elif st.session_state["authentication_status"]:
                     column_to_filter = st.sidebar.selectbox("Select column to filter:", data_.columns)
                     filter_input = st.sidebar.text_input("Enter the holes to be filtered (comma-separated):")
                     filter_list = [x.strip() for x in filter_input.split(',')]
-                    if column_to_filter =='ORTP':
-                        #user input for data filtering
-                        filter_num=st.sidebar.text_input("Enter the ORTP to be filtered (comma-separated):")
-                        filter_lists = [int(value.strip()) for value in filter_num.split(',')]
-                        df=data_[data_['ORTP'].isin(filter_lists)]
-                        st.dataframe(df)
-                    elif column_to_filter =='OUTLR':
-                        #user input for data filtering
-                        filter_nums=st.sidebar.text_input("Enter the ORTP to be filtered (comma-separated):")
-                        filter_lis = [int(values.strip()) for values in filter_nums.split(',')]
-                        df1=data_[data_['OUTLR'].isin(filter_lis)]
-                        st.dataframe(df1)
-                    else:
-                        st.warning('column selected cant be use for filtering')
     
                     #user input for data filtering
                     filtering=st.sidebar.number_input('Default TCU-Cutoff value', value=0.1)
