@@ -153,7 +153,7 @@ if authentication_status:
             fig, ax = plt.subplots(figsize=(10, 6))
             major_ticks = np.arange(0, 100, 5)
 
-            sns.scatterplot(x=x_col, y=y_col, hue=Ore_Type,
+            sns.scatterplot(x=x_col, y=y_col, hue=ore_type,
                             data=data_plot, palette=colors,
                             legend='full', alpha=1.0, ax=ax)
 
@@ -279,7 +279,7 @@ if authentication_status:
                 plot_title = st.sidebar.text_input("Enter Plot Title")
                 st.session_state.x_col= st.sidebar.selectbox("Select X Column",columns)
                 st.session_state.y_col= st.sidebar.selectbox("Select Y Column",columns)
-                st.session_state.ore_type =st.sidebar.selectbox("Select Ore_type Column", columns, index=0)
+                st.session_state.ore_type =st.sidebar.selectbox("Select ore_type Column", columns, index=0)
                 st.session_state.lith=st.sidebar.selectbox("Select Lithology Column", columns, index=0)
 
 
@@ -289,7 +289,7 @@ if authentication_status:
 
                 #check if assay data has ore type 99 and has grade present in it. This is to help geologists know what holes to fix in the database
 
-                if (data_c[st.session_state.Ore_Type]==99).any() and (data_c['TCU'] >=0).any():
+                if (data_c[st.session_state.ore_type]==99).any() and (data_c['TCU'] >=0).any():
                     data_n=data_c[(data_c[st.session_state.ore_type] == 99) & (data_c['TCU'] >= 0)]
                     st.subheader("ORTP 99 Assay Data:")
                     st.dataframe(data_n)
@@ -329,7 +329,7 @@ if authentication_status:
                     #creating outliers dataframe        
                     #Find OT21  Outliers
                     idx=(~(data_plot['PQLT'].between(30, 60))&(data_plot[st.session_state.ore_type]==21) | 
-                         ~(data_plot['PXCU'].between(20, 60))& (data_plot[st.session_state.Ore_Type]==21))
+                         ~(data_plot['PXCU'].between(20, 60))& (data_plot[st.session_state.ore_type]==21))
                     data_plot.loc[idx, 'FLAGD'] = 5
                     ot21_outliers = data_plot.loc[idx].reset_index(drop=True)
 
