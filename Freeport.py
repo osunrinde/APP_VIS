@@ -410,7 +410,7 @@ if authentication_status:
             with plot_button:
                 if st.button("Plot"):
                     with st.spinner("Generating plot..."):
-                        PXCU_PQLT_PLOT(data_plot, st.session_state.x_col, st.session_state.y_col,
+                        pxcu_pqlt_plot(data_plot, st.session_state.x_col, st.session_state.y_col,
                                        st.session_state.ore_type, st.session_state.lith, plot_title)
                         st.pyplot(st.session_state.plot)
                         st.set_option('deprecation.showPyplotGlobalUse', False)
