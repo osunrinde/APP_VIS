@@ -288,7 +288,7 @@ elif st.session_state["authentication_status"]:
                     column_to_filter = st.sidebar.selectbox("Select column to filter:", data_.columns)
                     filter_input = st.sidebar.text_input("Enter the holes to be filtered (comma-separated):")
                     filter_list = [x.strip() for x in filter_input.split(',')]
-                    if column_to_filter =='ORTYP':
+                    if column_to_filter =='ORTP':
                         #user input for data filtering
                         filter_num=st.sidebar.text_input("Enter the ORTP to be filtered (comma-separated):")
                         filter_lists = [int(value.strip()) for value in filter_num.split(',')]
