@@ -287,18 +287,17 @@ elif st.session_state["authentication_status"]:
                     # Select column to filter
                     column_to_filter = st.sidebar.selectbox("Select column to filter:", data_.columns)
                     filter_input = st.sidebar.text_input("Enter the holes to be filtered (comma-separated):")
+                    filter_values = [value.strip() for value in filter_input.split(',') if value.strip()]
                     filter_list = [x.strip() for x in filter_input.split(',')]
                     if column_to_filter =='ORTP':
                         #user input for data filtering
-                        filter_num=st.sidebar.text_input("Enter the ORTP to be filtered (comma-separated):")
-                        filter_lists = [int(value.strip()) for value in filter_num.split(',') if value.strip()]
-                        df=data_[data_['ORTP'].isin(filter_lists)]
+                        filter_values = [int(value) for value in filter_values if value.isnumeric()]
+                        df=data_[data_['ORTP'].isin(filter_values)]
                         st.dataframe(df)
                     elif column_to_filter =='OUTLR':
                         #user input for data filtering
-                        filter_nums=st.sidebar.text_input("Enter the ORTP to be filtered (comma-separated):")
-                        filter_lis = [int(values.strip()) for values in filter_nums.split(',') if value.strip()]
-                        df1=data_[data_['OUTLR'].isin(filter_lis)]
+                        filter_values = [int(value) for value in filter_values if value.isnumeric()]
+                        df1=data_[data_['OUTLR'].isin(filter_values)]
                         st.dataframe(df1)
                     else:
                         st.warning('columns cannot be used for filtering')
