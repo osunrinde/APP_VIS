@@ -329,7 +329,7 @@ elif st.session_state["authentication_status"]:
                         st.dataframe(data_plot)
                     else:
                         data = data_c[~((data_c[st.session_state.ore_type] == 99) & (data_c['TCU'] >= 0))]
-                        data = data.loc[data[selected_columns].str.startswith(tuple(filter_list))]
+                        data = data.loc[data[column_to_filter].str.startswith(tuple(filter_list))]
                         data_plot=data.loc[data['TCU']>=0.1]
                         data_plot = data_plot[~data_plot[st.session_state.ore_type].isin([10,50,51,52,53,54])]
                         st.subheader("Filtered Assay Data:")
