@@ -287,6 +287,7 @@ elif st.session_state["authentication_status"]:
                     # Select column to filter
                     column_to_filter = st.sidebar.selectbox("Select column to filter:", data_.columns)
                     filter_input = st.sidebar.text_input("Enter the holes to be filtered (comma-separated):")
+                    filter_list = [x.strip() for x in filter_input.split(',')]
                     filter_values = [value.strip() for value in filter_input.split(',') if value.strip()]
                     
                     if column_to_filter =='ORTP':
@@ -300,7 +301,7 @@ elif st.session_state["authentication_status"]:
                         df1=data_[data_['OUTLR'].isin(filter_values)]
                         st.dataframe(df1)
                     else:
-                        filter_list = [x.strip() for x in filter_input.split(',')]
+                        st.warning('column selected cannot be used for filtering')
                     #user input for data filtering
                     filtering=st.sidebar.number_input('Default TCU-Cutoff value', value=0.1)
                     st.sidebar.write("change the default TCU-Cutoff value if needed")
@@ -331,6 +332,8 @@ elif st.session_state["authentication_status"]:
                         st.warning('please check assay data and correct as needed. This data will automatically be '
                                    'filtered out and would not be considered in the plot')
                     # Apply filtering logic
+                    def is_list_empty(input_list):
+                        return len(input_list)==0
                     if is_list_empty(filter_list):
                         data = data_c[~((data_c[st.session_state.ore_type] == 99) & (data_c['TCU'] >= 0))]
                         data_plot=data.loc[data['TCU']>=0.1]
