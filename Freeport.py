@@ -288,20 +288,7 @@ elif st.session_state["authentication_status"]:
                     column_to_filter = st.sidebar.selectbox("Select column to filter:", data_.columns)
                     filter_input = st.sidebar.text_input("Enter the holes to be filtered (comma-separated):")
                     filter_list = [x.strip() for x in filter_input.split(',')]
-                    filter_values = [value.strip() for value in filter_input.split(',') if value.strip()]
-                    
-                    if column_to_filter =='ORTP':
-                        #user input for data filtering
-                        filter_values = [int(value) for value in filter_values if value.isnumeric()]
-                        df=data_[data_['ORTP'].isin(filter_values)]
-                        st.dataframe(df)
-                    elif column_to_filter =='OUTLR':
-                        #user input for data filtering
-                        filter_values = [int(value) for value in filter_values if value.isnumeric()]
-                        df1=data_[data_['OUTLR'].isin(filter_values)]
-                        st.dataframe(df1)
-                    else:
-                        st.warning('column selected cannot be used for filtering')
+    
                     #user input for data filtering
                     filtering=st.sidebar.number_input('Default TCU-Cutoff value', value=0.1)
                     st.sidebar.write("change the default TCU-Cutoff value if needed")
@@ -341,17 +328,12 @@ elif st.session_state["authentication_status"]:
                         st.subheader("Filtered Assay Data:")
                         st.dataframe(data_plot)
                     else:
-                        selected_columns=data_c[column_to_filter]
-                        if selected_columns.dtype=='object':
-                            data = data_c[~((data_c[st.session_state.ore_type] == 99) & (data_c['TCU'] >= 0))]
-                            data = data.loc[data[selected_columns].str.startswith(tuple(filter_list))]
-                            data_plot=data.loc[data['TCU']>=0.1]
-                            data_plot = data_plot[~data_plot[st.session_state.ore_type].isin([10,50,51,52,53,54])]
-                            st.subheader("Filtered Assay Data:")
-                            st.dataframe(data_plot)
-                        else:
-                            st.warning('selected column cannot be used for filtering')
-                        
+                        data = data_c[~((data_c[st.session_state.ore_type] == 99) & (data_c['TCU'] >= 0))]
+                        data = data.loc[data[selected_columns].str.startswith(tuple(filter_list))]
+                        data_plot=data.loc[data['TCU']>=0.1]
+                        data_plot = data_plot[~data_plot[st.session_state.ore_type].isin([10,50,51,52,53,54])]
+                        st.subheader("Filtered Assay Data:")
+                        st.dataframe(data_plot)      
     
                 
                     if (st.session_state.x_col and st.session_state.y_col and st.session_state.ore_type)== "":
