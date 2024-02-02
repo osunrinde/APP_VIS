@@ -291,13 +291,13 @@ elif st.session_state["authentication_status"]:
                     if column_to_filter =='ORTP':
                         #user input for data filtering
                         filter_num=st.sidebar.text_input("Enter the ORTP to be filtered (comma-separated):")
-                        filter_lists = [int(value.strip()) for value in filter_num.split(',')]
+                        filter_lists = [int(value.strip()) for value in filter_num.split(',') if value.strip()]
                         df=data_[data_['ORTP'].isin(filter_lists)]
                         st.dataframe(df)
                     elif column_to_filter =='OUTLR':
                         #user input for data filtering
                         filter_nums=st.sidebar.text_input("Enter the ORTP to be filtered (comma-separated):")
-                        filter_lis = [int(values.strip()) for values in filter_nums.split(',')]
+                        filter_lis = [int(values.strip()) for values in filter_nums.split(',') if value.strip()]
                         df1=data_[data_['OUTLR'].isin(filter_lis)]
                         st.dataframe(df1)
                     else:
