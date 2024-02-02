@@ -342,7 +342,7 @@ elif st.session_state["authentication_status"]:
                         st.dataframe(data_plot)
                     else:
                         selected_columns=data_c[column_to_filter]
-                        if selected_columns=='object'
+                        if selected_columns=='object':
                             data = data_c[~((data_c[st.session_state.ore_type] == 99) & (data_c['TCU'] >= 0))]
                             data = data.loc[data[selected_columns].str.startswith(tuple(filter_list))]
                             data_plot=data.loc[data['TCU']>=0.1]
