@@ -349,8 +349,8 @@ elif st.session_state["authentication_status"]:
                             data_plot = data_plot[~data_plot[st.session_state.ore_type].isin([10,50,51,52,53,54])]
                             st.subheader("Filtered Assay Data:")
                             st.dataframe(data_plot)
-                    else:
-                        st.warning('selected column cannot be used for filtering)
+                        else:
+                            st.warning('selected column cannot be used for filtering)
                         
     
                 
