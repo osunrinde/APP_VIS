@@ -350,7 +350,7 @@ elif st.session_state["authentication_status"]:
                             st.subheader("Filtered Assay Data:")
                             st.dataframe(data_plot)
                         else:
-                            st.warning('selected column cannot be used for filtering)
+                            st.warning('selected column cannot be used for filtering')
                         
     
                 
