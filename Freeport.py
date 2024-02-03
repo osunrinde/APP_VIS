@@ -276,6 +276,9 @@ elif st.session_state["authentication_status"]:
                         data_ = pd.read_csv(files, encoding='ISO-8859-1')  # or encoding='cp1252'
                     except KeyError:
                         st.warning('please check the column headers to meet safford mine format: LITH, ORTP, HOLEID')
+                    except pd.errors.ParserError as e:
+                    # Handle the parsing error
+                        print(f"ParserError: {e}")
                     # Copy DataFrame
                     #data_C = data_.copy()
     
