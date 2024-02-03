@@ -3,5 +3,6 @@ primaryColor="#ff714b"
 backgroundColor="#1717f5"
 secondaryBackgroundColor="#f5de3b"
 textColor="#f5f6fb"
-# Increase the file upload limit to 2GB
-st.set_option('server.maxUploadSize', 2 * 1024)  # 2GB in kilobytes
+
+[server]
+maxUploadSize = 2048
