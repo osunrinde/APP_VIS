@@ -268,23 +268,50 @@ elif st.session_state["authentication_status"]:
             if uploaded_file is not None:
                 for files in uploaded_file:
                     # Process the uploaded file here
-                    try:
-                        data_ = pd.read_csv(files)
+                    file_name = files.name
+                    file_extension = file.split('.')[-1].lower()
+
+                    #checking the extension of the file the user uploaded
+                    if file_extension=='csv':
+                        
+                        try:
+                            data_ = pd.read_csv(files)
                        
-                    # Continue processing the DataFrame
-                    except UnicodeDecodeError:
-                        data_ = pd.read_csv(files, encoding='ISO-8859-1')  # or encoding='cp1252'
-                    except KeyError:
-                        st.warning('please check the column headers to meet safford mine format: LITH, ORTP, HOLEID')
-                    except pd.errors.ParserError as e:
-                    # Handle the parsing error
-                        st.warning(f"ParserError: {e}")
-                    except pd.errors.SomeOtherSpecificError as e:
-                    # Handle another specific error if needed
-                        st.warning(f"SomeOtherSpecificError: {e}")
-                    except Exception as e:
-                    # This block can catch any other exceptions that were not specifically caught above
-                        st.warning(f"An unexpected error occurred: {e}")
+                        # Continue processing the DataFrame
+                        except UnicodeDecodeError:
+                            data_ = pd.read_csv(files, encoding='ISO-8859-1')  # or encoding='cp1252'
+                        except KeyError:
+                            st.warning('please check the column headers to meet safford mine format: LITH, ORTP, HOLEID')
+                        except pd.errors.ParserError as e:
+                        # Handle the parsing error
+                            st.warning(f"ParserError: {e}")
+                        except pd.errors.SomeOtherSpecificError as e:
+                        # Handle another specific error if needed
+                            st.warning(f"SomeOtherSpecificError: {e}")
+                        except Exception as e:
+                        # This block can catch any other exceptions that were not specifically caught above
+                            st.warning(f"An unexpected error occurred: {e}")
+                    elif file_extension=='xlsx':
+                        
+                        try:
+                            data_ = pd.read_excel(files)
+                       
+                        # Continue processing the DataFrame
+                        except UnicodeDecodeError:
+                            data_ = pd.read_csv(files, encoding='ISO-8859-1')  # or encoding='cp1252'
+                        except KeyError:
+                            st.warning('please check the column headers to meet safford mine format: LITH, ORTP, HOLEID')
+                        except pd.errors.ParserError as e:
+                        # Handle the parsing error
+                            st.warning(f"ParserError: {e}")
+                        except pd.errors.SomeOtherSpecificError as e:
+                        # Handle another specific error if needed
+                            st.warning(f"SomeOtherSpecificError: {e}")
+                        except Exception as e:
+                        # This block can catch any other exceptions that were not specifically caught above
+                            st.warning(f"An unexpected error occurred: {e}")
+                    else:
+                        st.warning(f"This file is unsupported: {file_extension}")
 
                     
                     # Copy DataFrame
@@ -321,7 +348,7 @@ elif st.session_state["authentication_status"]:
                     #drop rows with ortp==99 and not having grades in it. This is because they are not needed for plotting or modelling
                     data_c=data_[~((data_[st.session_state.ore_type] == 99) & (data_['TCU'].isin([-1,-2])))]
     
-                    #check if assay data has ore type 99 and has grade present in it. This is to help geologists know what holes to fix in the database
+                    #check if assay data has ore type 99 and grade present. This is to help geologists know what holes to fix in the database
     
                     if (data_c[st.session_state.ore_type]==99).any() and (data_c['TCU'] >=0).any():
                         data_n=data_c[(data_c[st.session_state.ore_type] == 99) & (data_c['TCU'] >= 0)]
