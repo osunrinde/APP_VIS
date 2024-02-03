@@ -285,9 +285,6 @@ elif st.session_state["authentication_status"]:
                         except pd.errors.ParserError as e:
                         # Handle the parsing error
                             st.warning(f"ParserError: {e}")
-                        except pd.errors.SomeOtherSpecificError as e:
-                        # Handle another specific error if needed
-                            st.warning(f"SomeOtherSpecificError: {e}")
                         except Exception as e:
                         # This block can catch any other exceptions that were not specifically caught above
                             st.warning(f"An unexpected error occurred: {e}")
@@ -304,9 +301,6 @@ elif st.session_state["authentication_status"]:
                         except pd.errors.ParserError as e:
                         # Handle the parsing error
                             st.warning(f"ParserError: {e}")
-                        except pd.errors.SomeOtherSpecificError as e:
-                        # Handle another specific error if needed
-                            st.warning(f"SomeOtherSpecificError: {e}")
                         except Exception as e:
                         # This block can catch any other exceptions that were not specifically caught above
                             st.warning(f"An unexpected error occurred: {e}")
