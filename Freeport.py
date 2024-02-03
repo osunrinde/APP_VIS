@@ -275,7 +275,7 @@ elif st.session_state["authentication_status"]:
                     if file_extension=='csv':
                         
                         try:
-                            data_ = pd.read_csv(files)
+                            data_a = pd.read_csv(files)
                        
                         # Continue processing the DataFrame
                         except UnicodeDecodeError:
@@ -291,7 +291,7 @@ elif st.session_state["authentication_status"]:
                     elif file_extension=='xlsx':
                         
                         try:
-                            data_ = pd.read_excel(files)
+                            data_a = pd.read_excel(files)
                        
                         # Continue processing the DataFrame
                         except UnicodeDecodeError:
@@ -309,7 +309,7 @@ elif st.session_state["authentication_status"]:
 
                     
                     # Copy DataFrame
-                    #data_C = data_.copy()
+                    data_ = data_a.copy()
     
                     st.sidebar.write("File uploaded successfully!")
     
