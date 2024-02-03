@@ -15,3 +15,4 @@ xlsxwriter
 streamlit_authenticator
 matplotlib
 seaborn
+openpyxl
