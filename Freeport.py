@@ -319,8 +319,7 @@ elif st.session_state["authentication_status"]:
                         st.warning('please check assay data and correct as needed. This data will automatically be '
                                    'filtered out and would not be considered in the plot')
                     # Apply filtering logic
-                    def is_list_empty(input_list):
-                        return len(input_list)==0
+                
                     if is_list_empty(filter_list):
                         data = data_c[~((data_c[st.session_state.ore_type] == 99) & (data_c['TCU'] >= 0))]
                         data_plot=data.loc[data['TCU']>=0.1]
