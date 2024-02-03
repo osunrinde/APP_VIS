@@ -269,7 +269,7 @@ elif st.session_state["authentication_status"]:
                 for files in uploaded_file:
                     # Process the uploaded file here
                     file_name = files.name
-                    file_extension = files.split('.')[-1].lower()
+                    file_extension = file_name.split('.')[-1].lower()
 
                     #checking the extension of the file the user uploaded
                     if file_extension=='csv':
