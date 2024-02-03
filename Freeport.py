@@ -278,7 +278,15 @@ elif st.session_state["authentication_status"]:
                         st.warning('please check the column headers to meet safford mine format: LITH, ORTP, HOLEID')
                     except pd.errors.ParserError as e:
                     # Handle the parsing error
-                        print(f"ParserError: {e}")
+                        st.warning(f"ParserError: {e}")
+                    except pd.errors.SomeOtherSpecificError as e:
+                    # Handle another specific error if needed
+                        st.warning(f"SomeOtherSpecificError: {e}")
+                    except Exception as e:
+                    # This block can catch any other exceptions that were not specifically caught above
+                        st.warning(f"An unexpected error occurred: {e}")
+
+                    
                     # Copy DataFrame
                     #data_C = data_.copy()
     
