@@ -16,4 +16,4 @@ streamlit_authenticator
 matplotlib
 seaborn
 openpyxl
-pyobc
+pyodbc
