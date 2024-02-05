@@ -264,7 +264,8 @@ elif st.session_state["authentication_status"]:
             """, unsafe_allow_html=True)
             # create logout button
             authenticator.logout("Logout", "sidebar")
-            data_a=None
+            if 'data_a' not in st_session_state:
+                st.session_state.data_a=None
             # Option to choose data source
             
             data_source = st.sidebar.radio("Select Data Source", ("Local PC", "Database"))
@@ -282,17 +283,17 @@ elif st.session_state["authentication_status"]:
                         #checking the extension of the file the user uploaded
                         if file_extension=='csv':
                             try:
-                                data_ = pd.read_csv(files)
-                                data_a=data_.copy()
+                                data_a = pd.read_csv(files)
+                                st.session_state.data_=data_a.copy()
                                 st.sidebar.write("Loaded Data:")
-                                st.write(data_)
+                                st.write(data_a)
                                 
                             # Hqandling exceptions error
                             except UnicodeDecodeError:
-                                data_ = pd.read_csv(files, encoding='ISO-8859-1')  # or encoding='cp1252'
-                                data_a=data_.copy()
+                                data_a = pd.read_csv(files, encoding='ISO-8859-1')  # or encoding='cp1252'
+                                data_=data_a.copy()
                                 st.sidebar.write("Loaded Data:")
-                                st.write(data_)
+                                st.write(data_a)
                             except KeyError:
                                 st.warning('please check the column headers to meet safford mine format: LITH, ORTP, HOLEID')
                             except pd.errors.ParserError as e:
@@ -303,16 +304,16 @@ elif st.session_state["authentication_status"]:
                                 st.warning(f"An unexpected error occurred: {e}")
                         elif file_extension=='xlsx':
                             try:
-                                data_ = pd.read_excel(files)
-                                data_a=data_.copy()
+                                data_a = pd.read_excel(files)
+                                data_=data_a.copy()
                                 st.sidebar.write("Loaded Data:")
-                                st.write(data_)
+                                st.write(data_a)
                                # Continue processing the DataFrame
                             except UnicodeDecodeError:
                                 data_ = pd.read_csv(files, encoding='ISO-8859-1')  # or encoding='cp1252'
-                                data_a=data_.copy()
+                                st.session_state.data_=data_a.copy()
                                 st.sidebar.write("Loaded Data:")
-                                st.write(data_)
+                                st.write(data_a)
                             except KeyError:
                                 st.warning('please check the column headers to meet safford mine format: LITH, ORTP, HOLEID')
                             except pd.errors.ParserError as e:
@@ -339,11 +340,11 @@ elif st.session_state["authentication_status"]:
                     try:
                         conn = pyodbc.connect(f"DRIVER={driver};SERVER={server};DATABASE={database};Trusted_Connection=yes")
                         st.write('connection successful')
-                        data_ = pd.read_sql(user_query, conn)
-                        data_a=data_.copy()
+                        data_a = pd.read_sql(user_query, conn)
+                        st.session_state.data_=data_a.copy()
                         # Display the loaded data
                         st.sidebar.write("Loaded Data from SQL Server:")
-                        st.write(data_)
+                        st.write(data_a)
                 
                     except Exception as e:
                         st.error(f"An error occurred: {str(e)}")
@@ -352,13 +353,13 @@ elif st.session_state["authentication_status"]:
                             conn.close()
             
             # plot parameters
-            if data_a is not None:
+            if st.session_state.data_ is not None:
                     st.sidebar.write("Plot Parameters")
                     # Sidebar with filtering options
                     st.sidebar.header("Filter Options")
                             
                     # Select column to filter
-                    column_to_filter = st.sidebar.selectbox("Select column to filter:", data_.columns)
+                    column_to_filter = st.sidebar.selectbox("Select column to filter:", st.session_state.data_.columns)
                     filter_input = st.sidebar.text_input("Enter the holes to be filtered (comma-separated):")
                     filter_list = [x.strip() for x in filter_input.split(',')]
                         
@@ -368,7 +369,7 @@ elif st.session_state["authentication_status"]:
                             
                     if 'session_state' not in st.session_state:
                         st.session_state.session_state = dict(x_col=None, y_col=None, ore_type=None, lith=None)
-                        columns = data_.columns.tolist()
+                        columns = st.session_state.data_.columns.tolist()
                         
                         #create plot settings
                         st.sidebar.header("Plot Settings")
@@ -382,7 +383,7 @@ elif st.session_state["authentication_status"]:
                         
                         #data check
                         #drop rows with ortp==99 and not having grades in it. This is because they are not needed for plotting or modelling
-                        data_c=data_[~((data_[st.session_state.ore_type] == 99) & (data_['TCU'].isin([-1,-2])))]
+                        data_c=st.session_state.data_[~((st.session_state.data_[st.session_state.ore_type] == 99) & (st.session_state.data_['TCU'].isin([-1,-2])))]
         
                         #check if assay data has ore type 99 and grade present. This is to help geologists know what holes to fix in the database
         
