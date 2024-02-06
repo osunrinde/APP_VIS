@@ -1,20 +1,13 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Feb  5 07:46:39 2024
-
-@author: tosunrin
-"""
 import altair as alt
 import streamlit as st
-import pandas as pd
 from PIL import Image
-import pyodbc
 import io
 import os
 import base64
 import urllib.request
 import xlsxwriter
 import numpy as np
+import pandas as pd
 import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
@@ -28,7 +21,6 @@ import time
 from datetime import datetime
 import yaml
 from yaml.loader import SafeLoader
-
 
 ############################
 
@@ -77,7 +69,13 @@ with open('./config.yaml') as file:
     
 
 if st.session_state["authentication_status"] is False:
-    st.write('please login')
+    choice=st.sidebar.selectbox('login/Signup', ['Login', 'Sign up'])
+    if choice =='Login':
+        try:
+            authenticator.login()
+            st.error('Username/password is incorrect')
+        except Exception as e:
+            st.error(e)
 elif st.session_state["authentication_status"] is None:
     choice=st.sidebar.selectbox('login/Signup', ['Login', 'Sign up'])
     if choice =='Login':
@@ -98,8 +96,10 @@ elif st.session_state["authentication_status"] is None:
         yaml.dump(config, file, default_flow_style=False)
 elif st.session_state["authentication_status"]:
         st.sidebar.write(f'Welcome *{st.session_state["name"]}*')
-
-        
+    
+    #plot function
+    #@st.cache_data
+   
         def pxcu_pqlt_plot(data_plot, x_col, y_col, ore_type, lith, plot_title):
             #rectangles=[]
              #Legends
@@ -240,18 +240,10 @@ elif st.session_state["authentication_status"]:
         def is_list_empty(lst):
             return not lst 
     
-    #plot function
-    #@st.cache_data
-        
-        
-        
-############################
-
-#APP LAYOUT
-
-###########################
-
-        
+    
+    
+    
+        # Application body
         def main():
     
         #setting background color for the sidebar
@@ -264,288 +256,254 @@ elif st.session_state["authentication_status"]:
             """, unsafe_allow_html=True)
             # create logout button
             authenticator.logout("Logout", "sidebar")
-            if 'data_a' not in st_session_state:
-                st.session_state.data_a=None
-            # Option to choose data source
-            
-            data_source = st.sidebar.radio("Select Data Source", ("Local PC", "Database"))
-            
-            if data_source == "Local PC":
-            # Allow users to upload a CSV file from their PC
-                st.sidebar.header("Upload input files")
-                uploaded_file = st.sidebar.file_uploader("", type=["csv", "xlsx"], accept_multiple_files=True)
-                if uploaded_file is not None:
-                    for files in uploaded_file:
-                        # Process the uploaded file here
-                        file_name = files.name
-                        file_extension = file_name.split('.')[-1].lower()
-            
-                        #checking the extension of the file the user uploaded
-                        if file_extension=='csv':
-                            try:
-                                data_a = pd.read_csv(files)
-                                st.session_state.data_=data_a.copy()
-                                st.sidebar.write("Loaded Data:")
-                                st.write(data_a)
-                                
-                            # Hqandling exceptions error
-                            except UnicodeDecodeError:
-                                data_a = pd.read_csv(files, encoding='ISO-8859-1')  # or encoding='cp1252'
-                                data_=data_a.copy()
-                                st.sidebar.write("Loaded Data:")
-                                st.write(data_a)
-                            except KeyError:
-                                st.warning('please check the column headers to meet safford mine format: LITH, ORTP, HOLEID')
-                            except pd.errors.ParserError as e:
-                               # Handle the parsing error
-                               st.warning(f"ParserError: {e}")
-                            except Exception as e:
-                            # This block can catch any other exceptions that were not specifically caught above
-                                st.warning(f"An unexpected error occurred: {e}")
-                        elif file_extension=='xlsx':
-                            try:
-                                data_a = pd.read_excel(files)
-                                data_=data_a.copy()
-                                st.sidebar.write("Loaded Data:")
-                                st.write(data_a)
-                               # Continue processing the DataFrame
-                            except UnicodeDecodeError:
-                                data_ = pd.read_csv(files, encoding='ISO-8859-1')  # or encoding='cp1252'
-                                st.session_state.data_=data_a.copy()
-                                st.sidebar.write("Loaded Data:")
-                                st.write(data_a)
-                            except KeyError:
-                                st.warning('please check the column headers to meet safford mine format: LITH, ORTP, HOLEID')
-                            except pd.errors.ParserError as e:
-                               # Handle the parsing error
-                               st.warning(f"ParserError: {e}")
-                            except Exception as e:
-                               # This block can catch any other exceptions that were not specifically caught above
-                                   st.warning(f"An unexpected error occurred: {e}")
-                        else:
-                            st.warning(f"This file is unsupported: {file_extension}")
+    
+           # creating upload button and plot buttons
+    
+            #upload button
+            st.sidebar.header("Upload input files")
+            uploaded_file = st.sidebar.file_uploader("", type=["csv", "xlsx"], accept_multiple_files=True)
+    
+            # plot buttons
+    
+            if uploaded_file is not None:
+                for files in uploaded_file:
+                    # Process the uploaded file here
+                    file_name = files.name
+                    file_extension = file_name.split('.')[-1].lower()
+
+                    #checking the extension of the file the user uploaded
+                    if file_extension=='csv':
                         
-                
-            elif data_source == "Database":
-                # Database connection parameters (user inputs) 
-                server = st.sidebar.text_input("Server", value="your_server_name")
-                database = st.sidebar.text_input("Database", value="your_database_name")
-                driver = st.sidebar.text_input("ODBC Driver", value="{ODBC Driver 17 for SQL Server}")
-                
-                # User-specified SQL query
-                user_query = st.sidebar.text_area("Enter your SQL query")
-                
-                if st.sidebar.button("Load Data"):
-                    # Connect to the database
-                    try:
-                        conn = pyodbc.connect(f"DRIVER={driver};SERVER={server};DATABASE={database};Trusted_Connection=yes")
-                        st.write('connection successful')
-                        data_a = pd.read_sql(user_query, conn)
-                        st.session_state.data_=data_a.copy()
-                        # Display the loaded data
-                        st.sidebar.write("Loaded Data from SQL Server:")
-                        st.write(data_a)
-                
-                    except Exception as e:
-                        st.error(f"An error occurred: {str(e)}")
-                    finally:
-                        if conn is not None:
-                            conn.close()
-            
-            # plot parameters
-            if st.session_state.data_ is not None:
-                    st.sidebar.write("Plot Parameters")
+                        try:
+                            data_a = pd.read_csv(files)
+                       
+                        # Continue processing the DataFrame
+                        except UnicodeDecodeError:
+                            data_ = pd.read_csv(files, encoding='ISO-8859-1')  # or encoding='cp1252'
+                        except KeyError:
+                            st.warning('please check the column headers to meet safford mine format: LITH, ORTP, HOLEID')
+                        except pd.errors.ParserError as e:
+                        # Handle the parsing error
+                            st.warning(f"ParserError: {e}")
+                        except Exception as e:
+                        # This block can catch any other exceptions that were not specifically caught above
+                            st.warning(f"An unexpected error occurred: {e}")
+                    elif file_extension=='xlsx':
+                        
+                        try:
+                            data_a = pd.read_excel(files)
+                       
+                        # Continue processing the DataFrame
+                        except UnicodeDecodeError:
+                            data_ = pd.read_csv(files, encoding='ISO-8859-1')  # or encoding='cp1252'
+                        except KeyError:
+                            st.warning('please check the column headers to meet safford mine format: LITH, ORTP, HOLEID')
+                        except pd.errors.ParserError as e:
+                        # Handle the parsing error
+                            st.warning(f"ParserError: {e}")
+                        except Exception as e:
+                        # This block can catch any other exceptions that were not specifically caught above
+                            st.warning(f"An unexpected error occurred: {e}")
+                    else:
+                        st.warning(f"This file is unsupported: {file_extension}")
+
+                    
+                    # Copy DataFrame
+                    data_ = data_a.copy()
+    
+                    st.sidebar.write("File uploaded successfully!")
+    
                     # Sidebar with filtering options
                     st.sidebar.header("Filter Options")
-                            
+                    
                     # Select column to filter
-                    column_to_filter = st.sidebar.selectbox("Select column to filter:", st.session_state.data_.columns)
+                    column_to_filter = st.sidebar.selectbox("Select column to filter:", data_.columns)
                     filter_input = st.sidebar.text_input("Enter the holes to be filtered (comma-separated):")
                     filter_list = [x.strip() for x in filter_input.split(',')]
-                        
+    
                     #user input for data filtering
                     filtering=st.sidebar.number_input('Default TCU-Cutoff value', value=0.1)
                     st.sidebar.write("change the default TCU-Cutoff value if needed")
-                            
+                    
                     if 'session_state' not in st.session_state:
                         st.session_state.session_state = dict(x_col=None, y_col=None, ore_type=None, lith=None)
-                        columns = st.session_state.data_.columns.tolist()
-                        
-                        #create plot settings
-                        st.sidebar.header("Plot Settings")
-                        plot_title = st.sidebar.text_input("Enter Plot Title")
-                        st.session_state.x_col= st.sidebar.selectbox("Select X Column",columns)
-                        st.session_state.y_col= st.sidebar.selectbox("Select Y Column",columns)
-                        st.session_state.ore_type =st.sidebar.selectbox("Select ore_type Column", columns, index=0)
-                        st.session_state.lith=st.sidebar.selectbox("Select Lithology Column", columns, index=0)
-                        
-                        
-                        
-                        #data check
-                        #drop rows with ortp==99 and not having grades in it. This is because they are not needed for plotting or modelling
-                        data_c=st.session_state.data_[~((st.session_state.data_[st.session_state.ore_type] == 99) & (st.session_state.data_['TCU'].isin([-1,-2])))]
-        
-                        #check if assay data has ore type 99 and grade present. This is to help geologists know what holes to fix in the database
-        
-                        if (data_c[st.session_state.ore_type]==99).any() and (data_c['TCU'] >=0).any():
-                            data_n=data_c[(data_c[st.session_state.ore_type] == 99) & (data_c['TCU'] >= 0)]
-                            st.subheader("ORTP 99 Assay Data:")
-                            st.dataframe(data_n)
-                            st.warning('please check assay data and correct as needed. This data will automatically be '
-                                       'filtered out and would not be considered in the plot')
-                        # Apply filtering logic
-                    
-                        if is_list_empty(filter_list):
-                            data = data_c[~((data_c[st.session_state.ore_type] == 99) & (data_c['TCU'] >= 0))]
-                            data_plot=data.loc[data['TCU']>=0.1]
+                    columns = data_.columns.tolist()
+    
+                    #create plot settings
+                    st.sidebar.header("Plot Settings")
+                    plot_title = st.sidebar.text_input("Enter Plot Title")
+                    st.session_state.x_col= st.sidebar.selectbox("Select X Column",columns)
+                    st.session_state.y_col= st.sidebar.selectbox("Select Y Column",columns)
+                    st.session_state.ore_type =st.sidebar.selectbox("Select ore_type Column", columns, index=0)
+                    st.session_state.lith=st.sidebar.selectbox("Select Lithology Column", columns, index=0)
+    
+    
+                    #data check
+                    #drop rows with ortp==99 and not having grades in it. This is because they are not needed for plotting or modelling
+                    data_c=data_[~((data_[st.session_state.ore_type] == 99) & (data_['TCU'].isin([-1,-2])))]
+    
+                    #check if assay data has ore type 99 and grade present. This is to help geologists know what holes to fix in the database
+    
+                    if (data_c[st.session_state.ore_type]==99).any() and (data_c['TCU'] >=0).any():
+                        data_n=data_c[(data_c[st.session_state.ore_type] == 99) & (data_c['TCU'] >= 0)]
+                        st.subheader("ORTP 99 Assay Data:")
+                        st.dataframe(data_n)
+                        st.warning('please check assay data and correct as needed. This data will automatically be '
+                                   'filtered out and would not be considered in the plot')
+                    # Apply filtering logic
+                
+                    if is_list_empty(filter_list):
+                        data = data_c[~((data_c[st.session_state.ore_type] == 99) & (data_c['TCU'] >= 0))]
+                        data_plot=data.loc[data['TCU']>=0.1]
+                        data_plot = data_plot[~data_plot[st.session_state.ore_type].isin([10,50,51,52,53,54])]
+                        st.subheader("Filtered Assay Data:")
+                        st.dataframe(data_plot)
+                    else:
+                        data = data_c[~((data_c[st.session_state.ore_type] == 99) & (data_c['TCU'] >= 0))]
+                        data = data.loc[data[column_to_filter].str.startswith(tuple(filter_list))]
+                        data_plot=data.loc[data['TCU']>=0.1]
+                        data_plot = data_plot[~data_plot[st.session_state.ore_type].isin([10,50,51,52,53,54])]
+                        st.subheader("Filtered Assay Data:")
+                        st.dataframe(data_plot)      
+    
+                
+                    if (st.session_state.x_col and st.session_state.y_col and st.session_state.ore_type)== "":
+                        pass
+                    else:
+    
+                        if filtering !=0.1:
+                            #default filtering option
+                            data_plot=data.loc[data['TCU']>=filtering]
                             data_plot = data_plot[~data_plot[st.session_state.ore_type].isin([10,50,51,52,53,54])]
-                            st.subheader("Filtered Assay Data:")
-                            st.dataframe(data_plot)
+                         
+                        if st.session_state.x_col and st.session_state.y_col and st.session_state.ore_type and \
+                                plot_title is not None:
+                            st.write('proceed to plot graph')
                         else:
-                            data = data_c[~((data_c[st.session_state.ore_type] == 99) & (data_c['TCU'] >= 0))]
-                            data = data.loc[data[column_to_filter].str.startswith(tuple(filter_list))]
-                            data_plot=data.loc[data['TCU']>=0.1]
-                            data_plot = data_plot[~data_plot[st.session_state.ore_type].isin([10,50,51,52,53,54])]
-                            st.subheader("Filtered Assay Data:")
-                            st.dataframe(data_plot)      
-        
+                            st.warning('select all necessary variable')
+                        #creating outliers dataframe        
+                        #Find OT21  Outliers
+                        idx=(~(data_plot['PQLT'].between(30, 60))&(data_plot[st.session_state.ore_type]==21) | 
+                             ~(data_plot['PXCU'].between(20, 60))& (data_plot[st.session_state.ore_type]==21))
+                        data_plot.loc[idx, 'FLAGD'] = 5
+                        ot21_outliers = data_plot.loc[idx].reset_index(drop=True)
+    
+                        #Find OT22  Outliers
+                        idx1=(~(data['PQLT'].between(60, 100))&(data[st.session_state.ore_type]==22) |
+                              ~(data['PXCU'].between(50, 100))& (data[st.session_state.ore_type]==22))
+                        data_plot.loc[idx1, 'FLAGD'] = 5
+                        ot22_outliers = data_plot.loc[idx1].reset_index(drop=True)
+                        #Find OT27  Outliers
+                        idx2=(~(data_plot['PQLT'].between(0, 35))&(data_plot[st.session_state.ore_type]==27) | 
+                              ~(data_plot['PXCU'].between(0, 35))& (data_plot[st.session_state.ore_type]==27))
+                        
+                        data_plot.loc[idx2, 'FLAGD'] = 5
+                        ot27_outliers = data_plot.loc[idx2].reset_index(drop=True)
                     
-                        if (st.session_state.x_col and st.session_state.y_col and st.session_state.ore_type)== "":
-                            pass
-                        else:
-        
-                            if filtering !=0.1:
-                                #default filtering option
-                                data_plot=data.loc[data['TCU']>=filtering]
-                                data_plot = data_plot[~data_plot[st.session_state.ore_type].isin([10,50,51,52,53,54])]
-                             
-                            if st.session_state.x_col and st.session_state.y_col and st.session_state.ore_type and \
-                                    plot_title is not None:
-                                st.write('proceed to plot graph')
-                            else:
-                                st.warning('select all necessary variable')
-                            #creating outliers dataframe        
-                            #Find OT21  Outliers
-                            idx=(~(data_plot['PQLT'].between(30, 60))&(data_plot[st.session_state.ore_type]==21) | 
-                                 ~(data_plot['PXCU'].between(20, 60))& (data_plot[st.session_state.ore_type]==21))
-                            data_plot.loc[idx, 'FLAGD'] = 5
-                            ot21_outliers = data_plot.loc[idx].reset_index(drop=True)
-        
-                            #Find OT22  Outliers
-                            idx1=(~(data['PQLT'].between(60, 100))&(data[st.session_state.ore_type]==22) |
-                                  ~(data['PXCU'].between(50, 100))& (data[st.session_state.ore_type]==22))
-                            data_plot.loc[idx1, 'FLAGD'] = 5
-                            ot22_outliers = data_plot.loc[idx1].reset_index(drop=True)
-                            #Find OT27  Outliers
-                            idx2=(~(data_plot['PQLT'].between(0, 35))&(data_plot[st.session_state.ore_type]==27) | 
-                                  ~(data_plot['PXCU'].between(0, 35))& (data_plot[st.session_state.ore_type]==27))
-                            
-                            data_plot.loc[idx2, 'FLAGD'] = 5
-                            ot27_outliers = data_plot.loc[idx2].reset_index(drop=True)
-                        
-        
-                            #Find OT31  Outliers
-                            idx3=(~(data_plot['PQLT'].between(50, 100))&(data_plot[st.session_state.ore_type]==31) | 
-                                  ~(data_plot['PXCU'].between(20, 50))& (data_plot[st.session_state.ore_type]==31))
-        
-                            data_plot.loc[idx3, 'FLAGD'] = 5
-                            ot31_outliers = data_plot.loc[idx3].reset_index(drop=True)
-                        
-                            #Find OT32  Outliers
-                            idx8=(~(data_plot['PQLT'].between(35, 57))&(data_plot[st.session_state.ore_type]==32) |
-                                  ~(data_plot['PXCU'].between(0, 20))& (data_plot[st.session_state.ore_type]==32))
-                            data_plot.loc[idx8, 'FLAGD'] = 5
-                            ot32_outliers = data_plot.loc[idx8].reset_index(drop=True)
-                        
-                            #Find OT34  Outliers
-                            idx4=(~(data_plot['PQLT'].between(57, 100))&(data_plot[st.session_state.ore_type]==34) | 
-                                  ~(data_plot['PXCU'].between(0, 20))& (data_plot[st.session_state.ore_type]==34))
-        
-                            data_plot.loc[idx4, 'FLAGD'] = 5
-                            ot34_outliers = data_plot.loc[idx4].reset_index(drop=True)
-        
-                            #Find OT37  Outliers
-                            idx5=(~(data_plot['PQLT'].between(15, 25))&(data_plot[st.session_state.ore_type]==37) |
-                                  ~(data_plot['PXCU'].between(0, 20))& (data_plot[st.session_state.ore_type]==37))
-        
-                            data_plot.loc[idx5, 'FLAGD'] = 5
-                            ot37_outliers = data_plot.loc[idx5].reset_index(drop=True)
-            
-        
-                            #Find OT41  Outliers
-                            idx6=(~(data_plot['PQLT'].between(0, 15))&(data_plot[st.session_state.ore_type]==41) |
-                                  ~(data_plot['PXCU'].between(0, 15))& (data_plot[st.session_state.ore_type]==41))
-        
-                            data_plot.loc[idx6, 'FLAGD'] = 5
-                            ot41_outliers = data_plot.loc[idx6].reset_index(drop=True)
+    
+                        #Find OT31  Outliers
+                        idx3=(~(data_plot['PQLT'].between(50, 100))&(data_plot[st.session_state.ore_type]==31) | 
+                              ~(data_plot['PXCU'].between(20, 50))& (data_plot[st.session_state.ore_type]==31))
+    
+                        data_plot.loc[idx3, 'FLAGD'] = 5
+                        ot31_outliers = data_plot.loc[idx3].reset_index(drop=True)
                     
+                        #Find OT32  Outliers
+                        idx8=(~(data_plot['PQLT'].between(35, 57))&(data_plot[st.session_state.ore_type]==32) |
+                              ~(data_plot['PXCU'].between(0, 20))& (data_plot[st.session_state.ore_type]==32))
+                        data_plot.loc[idx8, 'FLAGD'] = 5
+                        ot32_outliers = data_plot.loc[idx8].reset_index(drop=True)
+                    
+                        #Find OT34  Outliers
+                        idx4=(~(data_plot['PQLT'].between(57, 100))&(data_plot[st.session_state.ore_type]==34) | 
+                              ~(data_plot['PXCU'].between(0, 20))& (data_plot[st.session_state.ore_type]==34))
+    
+                        data_plot.loc[idx4, 'FLAGD'] = 5
+                        ot34_outliers = data_plot.loc[idx4].reset_index(drop=True)
+    
+                        #Find OT37  Outliers
+                        idx5=(~(data_plot['PQLT'].between(15, 25))&(data_plot[st.session_state.ore_type]==37) |
+                              ~(data_plot['PXCU'].between(0, 20))& (data_plot[st.session_state.ore_type]==37))
+    
+                        data_plot.loc[idx5, 'FLAGD'] = 5
+                        ot37_outliers = data_plot.loc[idx5].reset_index(drop=True)
         
-                            #Find OT42  Outliers
-                            idx7=(~(data_plot['PQLT'].between(15, 35))&(data_plot[st.session_state.ore_type]==42) |
-                                  ~(data_plot['PXCU'].between(0, 15))& (data_plot[st.session_state.ore_type]==42))
-        
-                            data_plot.loc[idx7, 'FLAGD'] = 5
-                            ot42_outliers = data_plot.loc[idx7].reset_index(drop=True)
-                            
-        
-                            #ORTP 99 outliers
-                            id_=(data_c[st.session_state.ore_type] == 99) & (data_c['TCU'] >= 0)
-                            data_plot.loc[id_, 'FLAGD'] = 5
-                            ortp_99= data_plot.loc[id_].reset_index(drop=True)
-        
-                            #put all outliers into dataframe
-                            dataframes = {'OT21_Outliers': ot21_outliers, 'OT22_Outliers': ot22_outliers, 'OT27_Outliers': ot27_outliers, 
-                                          'OT31_Outliers': ot31_outliers, 'OT32_Outliers': ot32_outliers,
-                                          'OT34_Outliers': ot34_outliers, 'OT37_Outliers': ot37_outliers, 'OT41_Outliers': ot41_outliers, 
-                                          'OT42_Outliers': ot42_outliers,'ORTP_99_Outliers':ortp_99}
-        
-        
-                            #creating columns for the plot and download buttons
-                    plot_button, download_button=st.columns(2)
-                    #graphical visualization plot button
-                    if 'plot' not in st.session_state:
-                        st.session_state.plot=None
-                    with plot_button:
-                        if st.button("Plot"):
-                            with st.spinner("Generating plot..."):
-                                pxcu_pqlt_plot(data_plot, st.session_state.x_col, st.session_state.y_col,
-                                               st.session_state.ore_type, st.session_state.lith, plot_title)
-                                st.pyplot(st.session_state.plot)
-                                st.set_option('deprecation.showPyplotGlobalUse', False)
-                                st.write("Note: Interactive dashboard is displayed above.")
-                        if st.session_state.plot is not None:
+    
+                        #Find OT41  Outliers
+                        idx6=(~(data_plot['PQLT'].between(0, 15))&(data_plot[st.session_state.ore_type]==41) |
+                              ~(data_plot['PXCU'].between(0, 15))& (data_plot[st.session_state.ore_type]==41))
+    
+                        data_plot.loc[idx6, 'FLAGD'] = 5
+                        ot41_outliers = data_plot.loc[idx6].reset_index(drop=True)
+                
+    
+                        #Find OT42  Outliers
+                        idx7=(~(data_plot['PQLT'].between(15, 35))&(data_plot[st.session_state.ore_type]==42) |
+                              ~(data_plot['PXCU'].between(0, 15))& (data_plot[st.session_state.ore_type]==42))
+    
+                        data_plot.loc[idx7, 'FLAGD'] = 5
+                        ot42_outliers = data_plot.loc[idx7].reset_index(drop=True)
+                        
+    
+                        #ORTP 99 outliers
+                        id_=(data_c[st.session_state.ore_type] == 99) & (data_c['TCU'] >= 0)
+                        data_plot.loc[id_, 'FLAGD'] = 5
+                        ortp_99= data_plot.loc[id_].reset_index(drop=True)
+    
+                        #put all outliers into dataframe
+                        dataframes = {'OT21_Outliers': ot21_outliers, 'OT22_Outliers': ot22_outliers, 'OT27_Outliers': ot27_outliers, 
+                                      'OT31_Outliers': ot31_outliers, 'OT32_Outliers': ot32_outliers,
+                                      'OT34_Outliers': ot34_outliers, 'OT37_Outliers': ot37_outliers, 'OT41_Outliers': ot41_outliers, 
+                                      'OT42_Outliers': ot42_outliers,'ORTP_99_Outliers':ortp_99}
+    
+    
+                        #creating columns for the plot and download buttons
+                plot_button, download_button=st.columns(2)
+                #graphical visualization plot button
+                if 'plot' not in st.session_state:
+                    st.session_state.plot=None
+                with plot_button:
+                    if st.button("Plot"):
+                        with st.spinner("Generating plot..."):
+                            pxcu_pqlt_plot(data_plot, st.session_state.x_col, st.session_state.y_col,
+                                           st.session_state.ore_type, st.session_state.lith, plot_title)
                             st.pyplot(st.session_state.plot)
-                               
-                                #outlier execution button
-                        with download_button:
-                            if 'clicked' not in st.session_state:
-                                st.session_state.clicked = False
-        
-                            def click_button():
-                                st.session_state.clicked = True
-                            
-                            if st.button("Process Outliers"):
-                                time.sleep(3)
-                                download_time=datetime.now().strftime("%m%d%y_%H_%M_%S")
-                                download_filename = f"Outliers_{download_time}.xlsx"
-                                outliers_download(dataframes, download_filename)
-                                with open(download_filename, "rb") as files:
-                                    st.download_button(label="download", data=files.read(), file_name=download_filename,
-                                                       key="download_button", on_click=click_button)
-                                    if st.session_state.clicked:
-                                        st.success("Outliers successfully downloaded to your PC")
-                                    st.write(f'there are {idx.sum():,} OT21 Outliers  of the {len(idx):,} holes')
-                                    st.write(f'there are {idx1.sum():,} OT22 Outliers  of the {len(idx1):,} holes')
-                                    st.write(f'there are {idx2.sum():,} OT27 Outliers  of the {len(idx2):,} holes')
-                                    st.write(f'there are {idx3.sum():,} OT31 Outliers of the {len(idx3):,} holes')
-                                    st.write(f'there are {idx8.sum():,} OT32 Outliers of the {len(idx8):,} holes')
-                                    st.write(f'there are {idx4.sum():,} OT34 Outliers of the {len(idx4):,} holes')
-                                    st.write(f'there are {idx5.sum():,} OT37 Outliers of the {len(idx5):,} holes')
-                                    st.write(f'there are {idx6.sum():,} OT41 Outliers of the {len(idx6):,} holes')
-                                    st.write(f'there are {idx7.sum():,} OT42 Outliers of the {len(idx7):,} holes')
-                    
+                            st.set_option('deprecation.showPyplotGlobalUse', False)
+                            st.write("Note: Interactive dashboard is displayed above.")
+                    if st.session_state.plot is not None:
+                        st.pyplot(st.session_state.plot)
+                           
+                            #outlier execution button
+                    with download_button:
+                        if 'clicked' not in st.session_state:
+                            st.session_state.clicked = False
+    
+                        def click_button():
+                            st.session_state.clicked = True
+                        
+                        if st.button("Process Outliers"):
+                            time.sleep(3)
+                            download_time=datetime.now().strftime("%m%d%y_%H_%M_%S")
+                            download_filename = f"Outliers_{download_time}.xlsx"
+                            outliers_download(dataframes, download_filename)
+                            with open(download_filename, "rb") as files:
+                                st.download_button(label="download", data=files.read(), file_name=download_filename,
+                                                   key="download_button", on_click=click_button)
+                                if st.session_state.clicked:
+                                    st.success("Outliers successfully downloaded to your PC")
+                                st.write(f'there are {idx.sum():,} OT21 Outliers  of the {len(idx):,} holes')
+                                st.write(f'there are {idx1.sum():,} OT22 Outliers  of the {len(idx1):,} holes')
+                                st.write(f'there are {idx2.sum():,} OT27 Outliers  of the {len(idx2):,} holes')
+                                st.write(f'there are {idx3.sum():,} OT31 Outliers of the {len(idx3):,} holes')
+                                st.write(f'there are {idx8.sum():,} OT32 Outliers of the {len(idx8):,} holes')
+                                st.write(f'there are {idx4.sum():,} OT34 Outliers of the {len(idx4):,} holes')
+                                st.write(f'there are {idx5.sum():,} OT37 Outliers of the {len(idx5):,} holes')
+                                st.write(f'there are {idx6.sum():,} OT41 Outliers of the {len(idx6):,} holes')
+                                st.write(f'there are {idx7.sum():,} OT42 Outliers of the {len(idx7):,} holes')
+                
                                 
     
         if __name__ == "__main__":
             main()
-                         
+    
+       
