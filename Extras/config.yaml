@@ -4,6 +4,16 @@ cookie:
   name: some_cookie_name
 credentials:
   usernames:
+    erd:
+      email: taiwo.osunrinde@students.tamuk.edu
+      logged_in: false
+      name: Federal University of Technology Akure
+      password: $2b$12$i4y5MaiTiBwBW3aQ857B1.Xn5iMcxtFfRb61RFJEjuW1nV7odPLlW
+    ert:
+      email: nifemiosunrinde24@gmail.com
+      logged_in: false
+      name: free
+      password: $2b$12$VvTG1sHi6EwgL6blvJin1ucR1SlKYGBtDgyPWo6tNA6ok/pGHUiAm
     jsmith:
       email: jsmith@gmail.com
       logged_in: false
