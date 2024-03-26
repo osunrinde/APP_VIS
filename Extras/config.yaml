@@ -1,39 +1,28 @@
-cookie:
-  expiry_days: 0
-  key: some_signature_key
-  name: some_cookie_name
 credentials:
   usernames:
-    erd:
-      email: taiwo.osunrinde@students.tamuk.edu
-      logged_in: false
-      name: Federal University of Technology Akure
-      password: $2b$12$i4y5MaiTiBwBW3aQ857B1.Xn5iMcxtFfRb61RFJEjuW1nV7odPLlW
+    jsmith:
+      email: jsmith@gmail.com
+      failed_login_attempts: 0 # Will be managed automatically
+      logged_in: False # Will be managed automatically
+      name: John Smith
+      password: abc # Will be hashed automatically
+    rbriggs:
+      email: rbriggs@gmail.com
+      failed_login_attempts: 0 # Will be managed automatically
+      logged_in: False # Will be managed automatically
+      name: Rebecca Briggs
+      password: def # Will be hashed automatically
     ert:
       email: nifemiosunrinde24@gmail.com
       logged_in: false
       name: free
       password: $2b$12$VvTG1sHi6EwgL6blvJin1ucR1SlKYGBtDgyPWo6tNA6ok/pGHUiAm
-    jsmith:
-      email: jsmith@gmail.com
-      logged_in: false
-      name: John Smith
-      password: $2b$12$6WyKnkB6wUKKltLq1iIWGOpKqKF5n70HxOjgQDzzIIzoEJGq4VPde
-    rbriggs:
-      email: rbriggs@gmail.com
-      logged_in: false
-      name: Rebecca Briggs
-      password: $2b$12$Vu0YvSU.5Yjvyu6go/9fj.N2WVVN/ObFp0kPyRlQV3LMiTzMRXZYW
-    taiwo:
-      email: tosunrin@fmi.com
-      logged_in: true
-      name: Taiwo Osunrinde
-      password: $2b$12$j3PXBsDsLERmQR5eGDla2OSYZe/ioniOMXzWNh8v3SSFBTcfX42bm
-    taye:
-      email: osunrinde24@gmail.com
-      logged_in: true
-      name: Taiwo Oludele Osunrinde
-      password: $2b$12$z4YBVw6.rt31J.GGoBM.MOZ.jMldck9Auv01xRxdP/HjufAVlj1le
-preauthorized:
+cookie:
+  expiry_days: 0
+  key: some_signature_key # Must be string
+  name: some_cookie_name
+pre-authorized:
   emails:
   - melsby@gmail.com
+
+
