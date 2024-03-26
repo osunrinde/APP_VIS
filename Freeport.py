@@ -83,8 +83,8 @@ elif st.session_state["authentication_status"] is None:
         except Exception as e:
             st.error(e)
     # Saving config file
-with open('./Extras/config.yaml', 'w') as file:
-    yaml.dump(config, file, default_flow_style=False)
+    with open('./Extras/config.yaml', 'w') as file:
+        yaml.dump(config, file, default_flow_style=False)
 elif st.session_state["authentication_status"]:
     st.sidebar.write(f'Welcome *{st.session_state["name"]}*')
 
