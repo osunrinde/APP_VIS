@@ -1,5 +1,5 @@
 cookie:
-  expiry_days: 30
+  expiry_days: 0
   key: some_signature_key
   name: some_cookie_name
 credentials:
@@ -26,4 +26,5 @@ credentials:
       password: $2b$12$z4YBVw6.rt31J.GGoBM.MOZ.jMldck9Auv01xRxdP/HjufAVlj1le
 preauthorized:
   emails:
-  - melsby@gmail.com
+  - rrapprec@fmi.com
+  - geokings24@gmail.com
