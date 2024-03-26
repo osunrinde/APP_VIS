@@ -77,14 +77,14 @@ elif st.session_state["authentication_status"] is None:
         st.warning('Please enter your username and password')
     else:
         try:
-            email_register_user, username_register_user, name_register_user = authenticator.register_user(preauthorization=False)
+            email_register_user, username_register_user, name_register_user = authenticator.register_user(preauthorization=True)
             if email_register_user:
                 st.success('User registered successfully')
         except Exception as e:
             st.error(e)
     # Saving config file
-    with open('./Extras/config.yaml', 'w') as file:
-        yaml.dump(config, file, default_flow_style=False)
+with open('./Extras/config.yaml', 'w') as file:
+    yaml.dump(config, file, default_flow_style=False)
 elif st.session_state["authentication_status"]:
     st.sidebar.write(f'Welcome *{st.session_state["name"]}*')
 
