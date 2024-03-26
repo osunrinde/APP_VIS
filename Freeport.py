@@ -62,7 +62,7 @@ with open('./Extras/config.yaml') as file:
         config['cookie']['name'],
         config['cookie']['key'],
         config['cookie']['expiry_days'],
-        config['preauthorized']
+        #config['preauthorized']
         )
 
 if st.session_state["authentication_status"] is False:
