@@ -77,7 +77,7 @@ elif st.session_state["authentication_status"] is None:
         st.warning('Please enter your username and password')
     else:
         try:
-            email_register_user, username_register_user, name_register_user = authenticator.register_user(preauthorization=True)
+            email_register_user, username_register_user, name_register_user = authenticator.register_user(preauthorization=False)
             if email_register_user:
                 st.success('User registered successfully')
         except Exception as e:
